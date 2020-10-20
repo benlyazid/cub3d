@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/01/15 13:53:05 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:43:45 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,213 @@
 
 #define R_P ( M_PI / 180)
 
-int		draw_3d_image(t_all_info *info, int x, float alpha)
+int		draw_3d_image(t_all_info *info, float x, float alpha)
 {
-	float 	wall_h;
 	float	destance_to_the_wall;
 	float	destance_player_projection;
 	float	projection_wall;
-	float	bas;
-	int	y;
+	int		start;
+	int		z;
+	int		index;
+	int		c;
+	int	 end;
+	float	destance_to_sprite;
+	int 	sprite_start, sprite_end, z_sprite;
+	int		get;
+	float	angle_sprite_player;
+	int		index_sprite;
+	float	index_f;
+	t_desst_to_wall wall_dest;
+	int x_offsite;
+	t_sprite *save;
+	index = 0;
 
-	wall_h = info-> height_size;
-	destance_to_the_wall = calc_destance_to_wall(info);
-	destance_to_the_wall = destance_to_the_wall * cos (alpha * R_P);
-	destance_player_projection = info->width / tan (30 * R_P);
-	projection_wall = destance_player_projection * wall_h / destance_to_the_wall;
-	if (projection_wall > info->height)
-		projection_wall = info->height;
-	bas = (info->height - projection_wall) / 2;
 
-	y = 0;
-	/*while (y < info->height && y >= 0 && x < info->width && x >= 0)
-	{	 
-		if (y <= bas && y <= projection_wall + bas)
-			info->data[(y * info->width) + x] = 0x6416FAA;
-		else if (y >= bas && y <= projection_wall + bas)
-			info->data[(y * info->width) + x] = 0xffffff;
-		if (y % (int)info->height_size == 0)
-			info->data[(y * info->width) + x] = 0xFF0000;
-		y++;
-	}*/
-		x = 0;
+	info->sprite_struct_all = malloc(sizeof(t_sprite));
+	info->sprite_struct_start = info->sprite_struct_all;
+
+	wall_dest = calc_destance_to_wall(info);
+	info->x_wall = wall_dest.x_wall;
+	info->y_wall = wall_dest.y_wall;
+
+	destance_to_the_wall = wall_dest.destance * cosf (alpha * R_P);
+	destance_player_projection = (info->width / 2) / tanf (M_PI / 6 ); // /2
+
+	if(wall_dest.type != 'z')
+		projection_wall = destance_player_projection * info->size / destance_to_the_wall;
+
+
+	///////////
+	else
+	{
+		projection_wall = 0;
+		wall_dest.type = 'y';	
+	}
+	
+
+	/////////////////
+	start = (int)((info->height - projection_wall) / 2);
+	end = (int)((info->height + projection_wall) / 2);
+
+
+	z_sprite = sprite_start;
+
+	z = 0;
+	c = 0;
+	while (z < start)
+	{
+		index = ((z * (int)info->width) + (int)x);
+		//if ( index >= 0 && index < info->width * info->height)
+			//info->data_3d[index] = 0x02aaaa; //sky
+			info->data_3d[index] = (int)info->color_coll.value;
+		z++;
+	}
+
+	z = start;
+	while (z < (int)end)
+	{
+
+		index = (z * (int)info->width) + (int)x; 
+		if (index >= 0 && index < (int)info->height * (int)info->width)
+		{
+
+			info->data_3d[index] = get_texteur_value(info, c, wall_dest.type, projection_wall);
+		}
+
+		c++;
+		z++;
+		
+	 }
+		
+	z = end;
+	while(z < (int)info->height)
+	{
+		index = ((z * (int)info->width) + (int)x);
+		if ( index >= 0 && index < info->width * info->height)
+			//info->data_3d[index] = 53; //floor 
+			info->data_3d[index] = (int)info->color_flor.value;
+		z++;
+	}
+
+	if (info->sprite == 1 )
+	{	
+		sort_by_destance(info);
+		info->sprite_struct_all = info->sprite_struct_start;
+	}
+
+	while (info->sprite == 1 && info->sprite_struct_all)
+	{
+		destance_to_sprite = destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center, info->sprite_struct_all->y_center);
+		
+		info->projection_sprite = destance_player_projection * info->size / destance_to_sprite;
+		sprite_start = ((int)info->height - (int)info->projection_sprite) / 2;
+		sprite_end = (((int)info->height + (int)info->projection_sprite) / 2);
+		z_sprite = sprite_start;
+		while (z_sprite < sprite_end)
+		{ 
+			index = ((int)z_sprite * (int)info->width) + (int)x; 
+			if (index >= 0 && index < (int)info->height * (int)info->width)
+				if (wall_dest.destance > info->sprite_struct_all->dest)
+					x_offsite = get_sprite_value(info, (z_sprite - sprite_start), index, wall_dest.type, x);
+			z_sprite+=1;
+		}
+		
+		save = info->sprite_struct_all->next;
+		free(info->sprite_struct_all);
+		info->sprite_struct_all = save;
+	}
+	if (info->sprite == 0)
+	{
+		free(info->sprite_struct_start);
+	}
+	info->sprite = 0;
+
 	return (0);
 }
 
-float	calc_destance_to_wall(t_all_info *info)
+t_desst_to_wall	calc_destance_to_wall(t_all_info *info)
 {
-	float	destance;
-	int 	i;
-	int 	index;
-	int		index_x;
-	int		index_y;
-	int		x;
-	int		y;
+	t_point	xpoint;
+	t_point	ypoint;
+	float	xd;
+	float	yd;
+	t_desst_to_wall dest_to_wall;
 
-	destance = 0;
-	i = 0;
-		while (1)
-		{
-				index_x = (int)((info->xp + (i * cos((info->angle) * R_P))) * info->width_number / info->width);
-				index_y = (int)((info->yp + (i * sin((info->angle) * R_P))) * info->height_number / info->height);		
-				index = (index_y * info->width_number + index_x) * 2;
-				x = (int)(info->xp + (cos((info->angle) * R_P) * i));
-				y = (int)(info->yp + (sin((info->angle) * R_P) * i));
-				
-				//ft_putnbr_fd(info->angle, 1);
-				//ft_putstr_fd("\n", 1);
-				if (info->maps[index] == '1')
-					{
-						destance = sqrt(((x - info->xp) * (x - info->xp)) + ((y - info->yp) * (y - info->yp)));
-						return(destance); 
-					}
-				i++;
-				destance++;
-			}
+	xpoint = ray_casting_x(info);
+
+	
+	/*while(info->tst > 0)
+	{
+		//printf("leaks test0\n");
+	}*/
+	
+	ypoint = ray_casting_y(info);
+
+
+	
+	if(xpoint.x >= 0 && xpoint.y >= 0)
+		xd = destance(info, xpoint.x, xpoint.y);
+	else
+		xd = INT32_MAX;
+	if (ypoint.x >= 0 && ypoint.y >= 0)
+		yd = destance(info, ypoint.x, ypoint.y);
+	else 
+		yd = INT32_MAX;
+
+
+
+	if (xpoint.x >= 0 && xpoint.y >= 0 && yd >= xd)
+	{
+		dest_to_wall.destance = xd;
+		dest_to_wall.type = 'y'; //? x
+		dest_to_wall.x_wall =  xpoint.x;
+		dest_to_wall.y_wall = xpoint.y;
+		return(dest_to_wall);
+	}
+	else if (ypoint.x >= 0 && ypoint.y >= 0 && xd > yd)
+	{	
+		dest_to_wall.destance = yd;
+		dest_to_wall.type = 'x';//? y
+		dest_to_wall.x_wall =  ypoint.x;
+		dest_to_wall.y_wall = ypoint.y;
+		
+		return(dest_to_wall);	
+	}
+	dest_to_wall.x_wall = 0;
+	dest_to_wall.y_wall = 0;
+	dest_to_wall.type = 'z';
+	dest_to_wall.destance = 0;
+	return (dest_to_wall);
 }
 
 int				draw_all_image_3d(t_all_info *info)
 {
 	float save_angle;
 	float alpha;
-
+	float	x;
 	save_angle = info->angle;
-	 alpha = -30;
-	 while (alpha < 30)
-	 {
+	alpha = -30;
+	x = 0;
+
+	
+	while (x < info->width)
+	{
+		info->tst = x;
 		info->angle += alpha;
-		draw_3d_image(info, (int)((alpha + 30) * info->width / 60), alpha);
+		draw_3d_image(info, x, alpha);
 		info->angle = save_angle;
-		alpha+= ((float)60 / info->width);
-	 }
+		alpha+= (60 / info->width);
+		x+= 1;
+		//free(info->sprite_struct_start);
+		
+		/*while (info->sprite_struct_start)
+		{
+			free(info->sprite_struct_start);
+			info->sprite_struct_start = info->sprite_struct_start->next;
+		}*/
+		
+	}
+	printf("finish\n\n\n\n");
 	 info->angle = save_angle;
 	return (0);
 }
-/*void remove_3d_image(t_all_info *info)
-{
-	int x;
-	int	y;
-
-	x = 0;
-	while (x < info->width)
-	{
-		y  = 0;
-		while (y < info->height)
-		{
-			info->data[(y * info->width) + x] = 0x0;
-			y++;
-		}
-		x++;
-	}
-}*/

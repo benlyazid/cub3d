@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/01/16 12:23:41 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/20 11:03:16 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,124 +14,47 @@
 
 #define R_P ( M_PI / 180)
 
-// int			sheck_for_wall(float x, float y, t_all_info *info)
-// {
-// 	int dev;
-// 	int index_x;
-// 	int	index_y;
-// 	int	index;
-// 		index_x = x * info->width_number / info->width;
-// 		index_y = y * info->height_number / info->height;	
-// 		index = (int)((index_y * info->width_number  + index_x) * 2);
-// 		if (info->maps[index] == '1' || info->maps[index + 1] == '1')
-	
-// 	return (0);	
-// }
-
-int			sheck_block(float x, float y, t_all_info *info)
-{
-	int x0;
-	int	y0;
-	int	ix;
-	int	index;
-	int	iy;
-
-	x0 = (int)(x / info->width_size);
-	x0 *= (int)(info->width_size);	
-	y0 = (int)(y / info->height_size);
-	y0 *= (int)(info->height_size);
-	ix = 1;
-	ft_putstr_fd("x_size is : ",1);
-	ft_putnbr_fd(info->width_size, 1);
-	ft_putstr_fd("\n",1);
-	ft_putstr_fd("y_size is : ",1);
-	ft_putnbr_fd(info->height_size, 1);
-	ft_putstr_fd("\n",1);
-	ft_putstr_fd("x0 is : ",1);
-	ft_putnbr_fd(x0, 1);
-	ft_putstr_fd("\n",1);
-	ft_putstr_fd("y0 is : ",1);
-	ft_putnbr_fd(y0, 1);
-	ft_putstr_fd("\n-----------\n",1);	
-	while (ix < info->width_size - 1)
-	{
-		iy = 1; //x+1?
-		while (iy < info->height_size - 1)
-		{
-			index = (y0 + iy) * info->width + (x0 + ix); 
-			if (info->data[index] == 0xffffff)
-				{
-					ft_putstr_fd("x_end is : ",1);
-					ft_putnbr_fd(x0 + ix, 1);
-					ft_putstr_fd("\n",1);
-					ft_putstr_fd("y_end is : ",1);
-					ft_putnbr_fd(y0 + iy, 1);
-					ft_putstr_fd("\n------------------------------------end \n",1);	
-					return (1);
-				}
-			iy++;
-		}
-		ix++;	
-	}
-	return (0);
-}
-
 int			draw_image_view(t_all_info *info)
 {
-	int i;
-	int index;
-	int	index_x;
-	int	index_y;
-	int x;
-	int y;
 
-	i = 0;
-		while (1)
-		{
-				index_x = (int)((info->xp + (i * cos((info->angle) * R_P))) * info->width_number / info->width);
-				index_y = (int)((info->yp + (i * sin((info->angle) * R_P))) * info->height_number / info->height);		
-				index = (index_y * info->width_number  + index_x) * 2;
-				x = (int)(info->xp + (cos((info->angle + 0)* R_P) * i));
-				y = (int)(info->yp + (sin((info->angle + 0)* R_P) * i));
-				if (info->maps[index] == '1')
-					return(0) ; 
-					index = (y * info->width) + x;
-				info->data[index] = 0x6416FAA;
-				i++;
-		}
-		
+	float	x_res, y_res, beta, x_start, y_start, percentage;
+	t_equation_of_line equation;
+	t_equation_of_line equation_center;
+	t_equation_of_line equation_of_ray;
+	t_entersection_point	point;
+	t_point start_point;
+	float xrs, yrs;
+	t_entersection_point intersection_point_result;
+	t_desst_to_wall	destance_to_wall;
+	destance_to_wall = calc_destance_to_wall(info);
+	float	angle_player_center;
+	float	angle_player_ray;
+	float	angle_rotation;
+	float	angle_result;
+	float	intersection_x;
+	float	intersection_y;
+	float	point_start_x;
+	float	point_start_y;
+	float	start_x;
+	float	start_y;
+	int		get_x;
+	int		get_y;
+	int		get;
+	float	get_x_f, get_y_f;
+	float	x_offsite;
+
+
+	if (info->sprite == 0)
+		DDA(info, info->xp, info->yp, destance_to_wall.x_wall, destance_to_wall.y_wall, 0x253691);
+	else
+	{
+		sort_by_destance(info);	
+		 info->sprite_struct_all = info->sprite_struct_start;
+		 DDA(info, info->xp, info->yp, info->sprite_struct_all->x, info->sprite_struct_all->y, 0x253691);
+
+	}
+	info->sprite = 0;
 	return (0);
-	//floor bas
-	//round meduim
-	//ceil height 
-	
-}
-
-int			destrow_image_view(t_all_info *info, int xp, int yp, float angle)
-{
-	int i;
-	int index;
-	int	index_x;
-	int	index_y;
-	int x;
-	int y;
-
-	i = 0;
-		while (1)
-		{
-				index_x = (int)((xp + (i * cos((angle + 0)* R_P))) * info->width_number / info->width);
-				index_y = (int)((yp + (i * sin((angle + 0)* R_P))) * info->height_number / info->height);		
-				index = (index_y * info->width_number  + index_x) * 2;
-		x = (int)(xp + (cos((angle + 0)* R_P) * i));
-				y = (int)(yp + (sin((angle + 0)* R_P) * i));
-			if (info->maps[index] == '1')
-				return (0);
-			index = (y * info->width) + x;
-			info->data[index] = 0x0;
-			i++;
-		}	
-	return (0);
-	
 }
 
 int				draw_image_view_angle(t_all_info *info)
@@ -141,77 +64,31 @@ int				draw_image_view_angle(t_all_info *info)
 
 	save_angle = info->angle;
 	 alpha = -30;
-	 ray_casting(info);
 	 while (alpha <= 30)
 	 {
 		 info->angle += alpha;
 		 draw_image_view(info);
 		 info->angle = save_angle;
-		 alpha+= 0.05;
-		 
+		 alpha+= 60 / info->width;
 	 }
 	 info->angle = save_angle;
 	return (0);
 }
-int				destrow_image_view_angle(t_all_info *info, int xp, int yp, float angle)
+
+int free_linked_list(t_sprite *list)
 {
-	float save_angle;
-	float alpha;
+	t_sprite *save;
+	save = list;
 
-	save_angle = angle;
-	 alpha = -30;
-	 while (alpha <= 30)
-	 {
-		 angle += alpha;
-		destrow_image_view(info, xp, yp,  angle);
-		 angle = save_angle;
-		 alpha+= 0.05;
-		 
-	 }
-	 angle = save_angle;
-	return (0);
-}
-
-int ray_casting(t_all_info *info)
-{
-	t_point	xpoint;
-	t_point	ypoint;
-	float	xd;
-	float	yd;
-
-	xpoint = ray_casting_x(info);
-	ypoint = ray_casting_y(info);
-	if(xpoint.x >= 0 && xpoint.y >= 0)
-		xd = destance(info, xpoint.x, xpoint.y);
-	else
-		xd = INT32_MAX;
-	if (ypoint.x >= 0 && ypoint.y >= 0)
-		yd = destance(info, ypoint.x, ypoint.y);
-	else 
-		yd = INT32_MAX;
-	/*ft_putnbr_fd(ypoint.x, 1);
-	ft_putstr_fd("	", 1);
-	ft_putnbr_fd(ypoint.y, 1);
-	ft_putstr_fd("\n", 1);*/
-	
-	
-	///////////////////////////////////////////////////
-	if (xpoint.x > 0 && xpoint.y > 0 && yd >= xd)
-	{	
-			DDA(info, xpoint.x, xpoint.y, 0x5869aa);
+	while (list != NULL)
+	{
+		list = list->next;
+		//free(save);
+		//save = NULL;
 	}
-	else if (ypoint.x > 0 && ypoint.y > 0 && xd > yd)
-	{	
-			DDA(info, ypoint.x, ypoint.y, 0x5869aa);
-	}
-	/////////////////////////////////////////////
-	//if (xpoint.x >= 0 && xpoint.y >= 0 && xpoint.x <= info->width && xpoint.y <= info->height)
-	//	DDA(info, xpoint.x, xpoint.y, 0x5869aa);
-	// if  (ypoint.x >= 0 && ypoint.y >= 0 && ypoint.x <= info->width && ypoint.y <= info->height)
-		//	DDA(info, ypoint.x, ypoint.y, 0x5869aa);
-
-		
-	return (0);
+	list = save;
+	list = NULL;
+	return 0;
 }
 		
 t_point	ray_casting_x(t_all_info *info)
@@ -224,38 +101,124 @@ t_point	ray_casting_x(t_all_info *info)
 	int		index_y;
 	int		index;
 	t_point	point;
-	int		dvs;
+	int		divs;
+	int		moins;
+	float index_x_f, index_y_f;
+	int sprite_center_x, sprite_center_y;
+	t_sprite *sprite_data;
+	int type;
 
-	dvs = (int)(info->xp / info->width_size);
-	dvs *= info->width_size;
-	x = dvs;
-	if (cos(info->angle * R_P) > 0)
-		x += info->width_size; 
+	moins = 0;
+	
+	info->sprite = 0;
+	divs = info->xp / info->size;
+	divs *= info->size;
+	x = divs;
+	t_sprite *save;
+	//info->sprite_struct_all = (t_sprite*)malloc(sizeof(t_sprite));
+	//info->sprite_struct_start = info->sprite_struct_all;
+
+	//if (info->sprite_struct_start == NULL)
+
+
+
+	
+	//you are here
+
+	
+
+	/*if (info->sprite_alloc == 0)
+	{	
+		printf("yes %lu\n", sizeof(t_sprite));
+		info->sprite_struct_all = (t_sprite*)malloc(sizeof(t_sprite));
+		info->sprite_struct_start = info->sprite_struct_all;
+		info->sprite_alloc = 1;
+	}
 	else
-		x-=1;
-	y = info->yp + (x - info->xp) * tan(info->angle * R_P);
-	if (cos(info->angle * R_P) > 0)
-		xa = info->width_size;
-	else
-		xa = -1 * info->width_size;
-	ya = xa * tan(info->angle * R_P); //info->height_size place by xa;
-	while (x >= 0 && y >= 0 && x < info->width && y < info->height)
 	{
-		index_x = (int)x * info->width_number / info->width;
-		index_y = (int)y * info->height_number / info->height;	
-		index = (index_y * info->width_number  + index_x) * 2;
-		if (sheck_block(x, y, info))
+		//free(info->sprite_struct_start);
+		info->sprite_struct_all = (t_sprite*)malloc(sizeof(t_sprite));
+		info->sprite_struct_start = info->sprite_struct_all;
+	}
+	while (info->tst == 1)
+	{
+		printf("tst\n");
+	}*/
+	
+	if (cosf(info->angle * R_P) > 0)
+		x += info->size;
+	else
+		moins = 1;
+	y = info->yp + (x - info->xp) * tanf(info->angle * R_P);
+	if (cosf(info->angle * R_P) > 0)
+		xa = info->size;
+	else
+		xa = -1 * info->size;
+	ya = xa * tanf(info->angle * R_P);
+	while (x >= 0.0 && y >= 0.0 && x < info->width_number * info->size && y < info->height_number * info->size)
+	{
+
+		type  = get_type_from_maps(x - moins, y, info);
+		if (type == 1 || type == 2)
 		{
-			point.x = x;
-			point.y = y;
-			return (point);
+			if (type == 1)
+			{
+				point.x = x - moins; //rm moin;;
+				point.y = y;
+
+				return(point);
+			}
+
+			if (type == 2)
+			{	
+					
+					sprite_center_x = ((int)x - moins) / (int)info->size;
+					sprite_center_x *= (int)info->size;
+					sprite_center_x += ((int)info->size / 2);
+
+					sprite_center_y = (int)y / info->size;
+					sprite_center_y *= (int)info->size;
+					sprite_center_y += ((int)info->size / 2);
+
+					if (info->sprite == 0)
+				{
+					info->sprite_struct_all->x_center = sprite_center_x;
+					info->sprite_struct_all->y_center =  sprite_center_y;
+					info->sprite_struct_all->visible = 'x';
+					info->sprite_struct_all->x = x - moins;
+					info->sprite_struct_all->y = y;
+					info->sprite_struct_all->dest = destance_2_points(info->xp, info->yp, x - moins, y);
+					info->sprite_struct_all->next = NULL;
+				}
+				else
+				{
+					sprite_data = (t_sprite*)malloc(sizeof(t_sprite));
+					sprite_data->x_center = sprite_center_x;
+					sprite_data->y_center =  sprite_center_y;	
+					sprite_data->visible = 'x';
+					sprite_data->x = x - moins;
+					sprite_data->y = y;
+					sprite_data->dest = destance_2_points(info->xp, info->yp, x - moins, y);
+					sprite_data->next = NULL;		
+					add_to_last(info->sprite_struct_all, sprite_data);
+					//////
+					//free(sprite_data);
+					///	//
+
+				}
+				
+				info->sprite = 1;
+
+			}
+
 		}
 		x+= xa;
 		y+= ya;
-		
+
 	}
 	point.x = -1;
-	point.y = -1;
+	point.y = -1;	
+
 	return (point);
 }
 
@@ -265,56 +228,104 @@ t_point	ray_casting_y(t_all_info *info)
 	float		y;
 	float		xa;
 	float 		ya;
-	//float		index_x;
-	//float		index_y;
-	//int			index;
 	t_point		point;
 	int			divs;
-	
-	divs = (info->yp / info->height_size) ;
-	divs *= info->height_size; 
+	int			moins;
+	int			index_x;
+	int			index_y;
+	int 		index;
+	int		sprite_center_x;
+	int		sprite_center_y;
+	t_sprite 	*sprite_data;
+	int		type;
+	moins = 0;
+	divs = (int)info->yp / (int)info->size;
+	divs *= (int)info->size; 
 	y = divs;
-	if (sin(info->angle * R_P) > 0)
-		y += info->height_size;
+
+	if (sinf(info->angle * R_P) > 0)
+		y += info->size;
 	else
-		y -= 1;
-	x = info->xp + ((y -info->yp) / tan(info->angle * R_P));
-	if (sin(info->angle * R_P) > 0)
-		ya = info->height_size;
+		moins = 1;
+	x = info->xp + ((y - info->yp) / tanf(info->angle * R_P));
+
+	if (sinf(info->angle * R_P) > 0)
+		ya = info->size;
 	else
-		ya = -1 * info->height_size;
-		if (sin(info->angle *R_P) == 1 || sin(info->angle *R_P) == -1) //tan (90) == error 
+		ya = -1 * info->size;
+		if (sinf(info->angle * R_P) == 1 || sinf(info->angle * R_P) == -1)
 			xa = 0;
 		else 
-			xa = ya / tan(info->angle * R_P);
-	
-	while (x >= 0 && y >= 0 && x <= info->width && y <= info->height)
-	{
-		
-		/*ft_putstr_fd("		", 1);
-		ft_putnbr_fd(index, 1);
-		ft_putstr_fd("		", 1);
-		ft_putchar_fd(info->maps[index], 1);*/
-		//info->data[(int)y * (int)info->width + (int)x] = 0xffff00;
-		if ( sheck_block(x, y, info)/*info->data[index] != 0|| info->maps[index + 5] == '1' || info->maps[index - 5] == '1'*/)
+			xa = ya / tanf(info->angle * R_P);
+
+	while (x >= 0.0 && y >= 0.0 && x < info->width_number * info->size && y < info->height_number * info->size)
+	 { 
+
+		type  = get_type_from_maps(x, y - moins, info);
+
+		if (type == 1 || type == 2)
 		{
-			point.x = (int)x;
-			point.y = (int)y;
-			return (point);
+			if (type == 1)
+			{
+				point.x = x;
+				point.y = y - moins;
+
+				return (point);
+			}
+			if (type == 2)
+			{
+					sprite_center_x = ((int)x) / (int)info->size;
+					sprite_center_x *= (int)info->size;
+					sprite_center_x += ((int)info->size / 2);
+					sprite_center_y = (int)(y - moins) / info->size;
+					sprite_center_y *= (int)info->size;
+					sprite_center_y += ((int)info->size / 2);
+
+				if (info->sprite== 0)
+				{
+	
+					info->sprite_struct_all->x_center = sprite_center_x;
+					info->sprite_struct_all->y_center = sprite_center_y;
+					info->sprite_struct_all->visible = 'y';
+					info->sprite_struct_all->x = x;
+					info->sprite_struct_all->y = y - moins;
+					info->sprite_struct_all->next = NULL;
+					info->sprite_struct_all->dest = destance_2_points(info->xp, info->yp, x, y - moins);
+					
+				
+				}
+				else
+				{
+					sprite_data = (t_sprite*)malloc(sizeof(t_sprite));
+					sprite_data->x_center = sprite_center_x;
+					sprite_data->y_center = sprite_center_y;
+					sprite_data->visible = 'y';
+					sprite_data->x = x;
+					sprite_data->y = y - moins;
+					sprite_data->dest = destance_2_points(info->xp, info->yp, x, y - moins);
+					sprite_data->next = NULL;	
+					add_to_last(info->sprite_struct_all, sprite_data);	
+				
+				}
+
+					info->sprite = 1;			
+			}
 		}
 		x += xa;
 		y += ya;
+		
 	}
+
 	point.x = -1;
 	point.y = -1;
 	return (point);
 }
 
-void DDA(t_all_info *info, int X1, int Y1, int color) 
+void DDA(t_all_info *info, int X1, int Y1, int X2, int Y2, int color) 
 { 
     // calculate dx & dy 
-    int dx =(int) X1 - (int)info->xp; 
-    int dy =(int) Y1 - (int)info->yp; 
+    int dx =(int) X1 - X2; 
+    int dy =(int) Y1 - Y2; 
   
     // calculate steps required for generating pixels 
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
@@ -323,8 +334,8 @@ void DDA(t_all_info *info, int X1, int Y1, int color)
     float Xinc = dx / (float) steps; 
     float Yinc = dy / (float) steps; 
     // Put pixel for each step 
-    float X = info->xp; 
-    float Y = info->yp; 
+    float X = X2; 
+    float Y = Y2; 
 	int		index_y;
 	int		index_x;
 	int 	index;
@@ -333,33 +344,14 @@ void DDA(t_all_info *info, int X1, int Y1, int color)
 		index_x = (int)X;
 		index_y = (int)Y;
 		index = (index_y * info->width) + index_x;
-		info->data[index] = color;
+		if (index_y >= 0 && index_y < info->height && index_x >= 0 && index_x < info->width)
+			info->data[index] = color;
+
         X += Xinc;           // increment in x at each step 
         Y += Yinc;           // increment in y at each step 
                              // generation step by step 
     } 
 } 
-
-int rm_all(t_all_info *info)
-{
-	int x;
-	int y;
-	int index;
-
-	x = 0;
-	while (x < info->width)
-	{
-		y = 0;
-		while (y < info->height)
-		{
-			index =  y * info->width + x;
-			info->data[(index)] = 0x0;
-			y++;
-		}
-		x++;
-	}
-	return (0);
-}
 
 float			destance(t_all_info *info, int x, int y)
 {	
@@ -369,6 +361,6 @@ float			destance(t_all_info *info, int x, int y)
 	
 	xx = (info->xp - x) * (info->xp - x);
 	yy = (info->yp - y) * (info->yp - y);
-	destance = sqrt(xx + yy);
+	destance = sqrtf(xx + yy);
 	return (destance);
 }
