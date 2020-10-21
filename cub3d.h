@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 19:59:30 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 10:13:23 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct	s_equation_of_line
 {
 	float	m;
 	float  	b;
+	int is_perpendicular;
 }				t_equation_of_line;
 
 typedef struct	s_intersection_point

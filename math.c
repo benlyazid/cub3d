@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/20 18:39:24 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 13:25:57 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ float       destance_2_points(float x1, float y1, float x2, float y2)
 t_equation_of_line  find_equation_of_line(float x1, float y1, float x2, float y2)
 {
     t_equation_of_line equation;
-
-    equation.m = (y1 - y2) / (x1 - x2);
+    if (x1 != x2)
+        equation.m = (y1 - y2) / (x1 - x2);
+    else
+        equation.m = 0;
     equation.b = y1 - (equation.m * x1);
+    equation.is_perpendicular = 0;
     return (equation);
 }
 
@@ -47,9 +50,32 @@ t_entersection_point             find_entersection_point_of_two_line(t_equation_
 {
 
    t_entersection_point     point;
-
+    
     point.x = (equation2.b - equation1.b) / (equation1.m - equation2.m);
     point.y = (point.x * equation1.m) + equation1.b;
+
+    if (equation1.is_perpendicular || equation2.is_perpendicular)
+    {    
+        if (info->xp != info->sprite_struct_all->x_center)
+        {
+            point.x = info->sprite_struct_all->x_center;
+            if (!equation1.is_perpendicular)
+                point.y = (point.x * equation1.m) + equation1.b;
+                
+            if (!equation2.is_perpendicular)
+                point.y = (point.x * equation2.m) + equation2.b;
+        }
+        else
+        {
+            point.y = info->sprite_struct_all->y_center;
+            if (!equation1.is_perpendicular)
+                point.x = (point.y - equation1.b) / equation1.m;
+                
+            if (!equation2.is_perpendicular)
+                point.x = (point.y - equation2.b) / equation2.m;
+        }
+
+    }
     return (point);
 }
 
@@ -67,7 +93,6 @@ t_point find_entersection_point_ofline_and_circle(t_all_info *info,float x_cente
     float x1, y1, x2, y2;
     float a, b,c ;
     t_point point;
-    
     a = powf(line.m, 2) + 1;
 
     b = (2 * line.m * (line.b - y_center)) - (2 * x_center);
@@ -78,28 +103,65 @@ t_point find_entersection_point_ofline_and_circle(t_all_info *info,float x_cente
     x2 = (-b + sqrtf(powf(b, 2) - (4 * a * c))) / (2 * a);
     y1 = ((line.m * x1) + line.b);
     y2 = ((line.m * x2) + line.b);
-    if (destance_2_points(x1, y1, 0, 0) > destance_2_points(x2, y2, 0, 0))
+
+    if (line.is_perpendicular == 1)
     {
-        point.x = x2;
-        point.y = y2;
-    }
-    else
-    {
-        point.x = x1;
-        point.y = y1;
+        if (x_center != info->sprite_struct_all->x_center)
+        {
+            x1 = x_center;
+            x2 = x1;
+            y1 = y_center + (info->size / 2);
+            y2 = y_center - (info->size / 2);
+        }
+        else
+        {
+            x1 = x_center + (info->size / 2);
+            x2 = x_center - (info->size / 2);
+            y1 = y_center;
+            y2 = y_center;
+        }
     }
     
-    //point.x = x1 < x2 ? x1 : x2;
+    // if (destance_2_points(x1, y1, 0, 0) > destance_2_points(x2, y2, 0, 0))
+    if ((info->yp >= y_center && info->xp >= x_center) || (info->yp >= y_center && info->xp <= x_center))
+    {
+       // printf("data is : x1 : %f, y1 : %f, X2 : %f, y2 : %f\n", x1, y1, x2, y2);
+        if (x1 > x2 || (x1 == x2 && y1 > y2))
+        {
+           // printf("enter 0\n");
+
+            point.x = x2;
+            point.y = y2;
+        }
+        else
+        {
+           // printf("enter 1\n");
+            point.x = x1;
+            point.y = y1;
+        }
+    }
+    else 
+    {
+
+        if (x1 < x2 )
+        {
+            point.x = x2;
+            point.y = y2;
+        }
+        else
+        {
+            point.x = x1;
+            point.y = y1;
+        }
+    }
+    
 
     
-    //point.x = x1;
-    /*if(point.x == x1)
+   /* if(point.x == x1)
         printf("else pint is %f, %f\n", x2, (line.m * x2) + line.b);
     else
-        printf("else pint is %f, %f\n", x1, (line.m * x1) + line.b);
+        printf("else pint is %f, %f\n", x1, (line.m * x1) + line.b);*/
         
-    point.y = ((line.m * point.x) + line.b);*/
-    
     return(point);
 
 }

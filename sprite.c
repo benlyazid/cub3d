@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/20 18:43:39 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 13:26:27 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,70 +32,85 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 	int		get;
 	float	get_x_f, get_y_f;
 
-float xp, yp, xs, ys, xv, yv, xx, yy;
-float teta, angle;
-float tst_x;
+	float xp, yp, xs, ys, xv, yv, xx, yy;
+	float teta, angle;
+	float tst_x;
 
-xp = info->xp;
-yp = info->yp;
-xs = info->sprite_struct_all->x_center;
-ys = info->sprite_struct_all->y_center;
-angle = info->save_angle - info->angle;
-xx = info->sprite_struct_all->x;
-yy = info->sprite_struct_all->y;
-t_point begin, end, test_begin;
+	xp = info->xp;
+	yp = info->yp;
+	xs = info->sprite_struct_all->x_center;
+	ys = info->sprite_struct_all->y_center;
+	angle = info->save_angle - info->angle;
+	xx = info->sprite_struct_all->x;
+	yy = info->sprite_struct_all->y;
+	t_point begin, end, test_begin;
 
-//player ray
-t_equation_of_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
+	//player ray
+	t_equation_of_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
 
-//sprite center player 
+	//sprite center player 
 
-t_equation_of_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
+	t_equation_of_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
 
-// sprite center equation
-t_equation_of_line sprite_center;
-sprite_center.m = -1 / player_sprite_center.m;
-sprite_center.b = ys - (xs * sprite_center.m);
+	// sprite center equation
+	t_equation_of_line sprite_center;
+	if (player_sprite_center.m != 0)
+	{
+		sprite_center.is_perpendicular = 0;
+		sprite_center.m = -1 / player_sprite_center.m;
+		sprite_center.b = ys - (xs * sprite_center.m);
+
+	}
+	else
+	{
+		sprite_center.is_perpendicular = 1;
+		sprite_center.m = 0;
+		sprite_center.b = ys;
+	}
 
 
-//printf("plyer sprite  EQ %f 	%f \n", player_sprite.m, player_sprite.b);
+	/*printf("plyer sprite ray  EQ %f 	%f \n", player_sprite.m, player_sprite.b);
+	printf("plyer sprite center  EQ %f 	%f \n", player_sprite_center.m, player_sprite_center.b);
 
-//printf("sprite EQ %f 	%f \n", sprite_center.m, sprite_center.b);
-//entersection new of ray view
-//xv = xs * cosf(angle * R_P) - (ys * sinf(angle * R_P));
-//yv = xs * sinf(angle * R_P) + (ys * cosf(angle * R_P));
+	printf("sprite EQ %f 	%f \n", sprite_center.m, sprite_center.b);*/
+	//entersection new of ray view
+	//xv = xs * cosf(angle * R_P) - (ys * sinf(angle * R_P));
+	//yv = xs * sinf(angle * R_P) + (ys * cosf(angle * R_P));
 
-xv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).x;
-yv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).y;
-// begin point 
-//try to chose the small one 
+	xv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).x;
+	yv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).y;
+	//printf("casting ray is  %f +  %f  \n", xv, yv);
 
-//intersection cercl and line 
-test_begin = find_entersection_point_ofline_and_circle(info, xs, ys, info->size / 2, sprite_center);
+	// begin point 
+	//try to chose the small one 
 
-begin.x = xs + (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
-if (begin.x > xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2))))
-	begin.x =  xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
-begin.y = begin.x * sprite_center.m + sprite_center.b;
+	//intersection cercl and line 
+	test_begin = find_entersection_point_ofline_and_circle(info, xs, ys, info->size / 2, sprite_center);
 
-tst_x = destance_2_points(begin.x, begin.y, xv, yv);
-// player view ray
-t_equation_of_line player_view;
+	/*begin.x = xs + (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
+	if (begin.x > xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2))))
+		begin.x =  xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
+	begin.y = begin.x * sprite_center.m + sprite_center.b;*/
 
-//end point 
-if (xs > begin.x)
-	end.x = begin.x - (xs - begin.x);
-else
-	end.x = xs - (begin.x - xs);
-if (ys > begin.y)
-	end.y = begin.y - (ys - begin.y);
-else
-	end.y = ys - (begin.y - ys);
+	// player view ray
+	t_equation_of_line player_view;
 
-begin.x = test_begin.x;
-begin.y = test_begin.y;
+	//end point 
+	if (xs > begin.x)
+		end.x = begin.x - (xs - begin.x);
+	else
+		end.x = xs - (begin.x - xs);
+	if (ys > begin.y)
+		end.y = begin.y - (ys - begin.y);
+	else
+		end.y = ys - (begin.y - ys);
+
+	begin.x = test_begin.x;
+	begin.y = test_begin.y;
+	tst_x = destance_2_points(begin.x, begin.y, xv, yv);
+
 	//printf("center   is  %f +  %f\n", xs, ys);
-	//printf("casting  is  %f +  %f  %f\n", xv, yv, angle);
+	//printf("casting  is  %f +  %f\n", xv, yv);
 	//printf("test : %f\n", tst_x);
 
 	//x_offsite = (info->size / 2) - destance_2_points(info->sprite_struct_all->x_center, info->sprite_struct_all->y_center, cos((info->angle) * R_P) * destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center , info->sprite_struct_all->y_center) + info->xp, sin((info->angle) * R_P) *  destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center, info->sprite_struct_all->y_center) + info->yp);
@@ -103,11 +118,13 @@ begin.y = test_begin.y;
 	get_x_f =  x_offsite / info->size *  info->sprite_w;
 	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
 	get = (int)get_y_f * (int)info->sprite_w + (int)get_x_f;
+	//printf("0player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
+
 	if ( destance_2_points(xs, ys, xv, yv) <= info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
 		{	
 			//printf("all dest is %f\n", destance_2_points(begin.x, begin.y, end.x, end.y));
 			//printf("begin  is  %f +  %f dest is %f\n", begin.x, begin.y, tst_x);
-			printf("ray  is  %f,  %f center  %f, %f begin %f, %f check  %f, %f\n", xv, yv, xs, ys, begin.x, begin.y, test_begin.x, test_begin.y);
+			//printf("player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
 
 			if (x_offsite > 0.0 && x_offsite < info->size)
 			{
