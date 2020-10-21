@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:02:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/02/04 17:57:29 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 20:28:15 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,11 @@ int ray_casting_mini(t_all_info *info)
 		yd = INT32_MAX;
 	if (xpoint.x > 0 && xpoint.y > 0 && yd >= xd)
 	{	
-			DDA_mini(info, xpoint.x, xpoint.y, 0x5869aa);
+			draw_line_mini(info, xpoint.x, xpoint.y, 0x5869aa);
 	}
 	else if (ypoint.x > 0 && ypoint.y > 0 && xd > yd)
 	{	
-			DDA_mini(info, ypoint.x, ypoint.y, 0x5869aa);
+			draw_line_mini(info, ypoint.x, ypoint.y, 0x5869aa);
 	}
 	return (0);
 }
@@ -220,7 +220,7 @@ t_point	ray_casting_y_mini(t_all_info *info)
 	return (point);
 }
 
-void DDA_mini(t_all_info *info, int X1, int Y1, int color) 
+void draw_line_mini(t_all_info *info, int X1, int Y1, int color) 
 { 
     // calculate dx & dy 
     int dx =(int) (X1 - (int)info->xp) / 5; 

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/20 11:03:16 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 20:40:35 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int			draw_image_view(t_all_info *info)
 {
 
 	float	x_res, y_res, beta, x_start, y_start, percentage;
-	t_equation_of_line equation;
-	t_equation_of_line equation_center;
-	t_equation_of_line equation_of_ray;
+	t_eq_line equation;
+	t_eq_line equation_center;
+	t_eq_line equation_of_ray;
 	t_entersection_point	point;
 	t_point start_point;
 	float xrs, yrs;
 	t_entersection_point intersection_point_result;
-	t_desst_to_wall	destance_to_wall;
+	t_d_wall	destance_to_wall;
 	destance_to_wall = calc_destance_to_wall(info);
 	float	angle_player_center;
 	float	angle_player_ray;
@@ -45,12 +45,12 @@ int			draw_image_view(t_all_info *info)
 
 
 	if (info->sprite == 0)
-		DDA(info, info->xp, info->yp, destance_to_wall.x_wall, destance_to_wall.y_wall, 0x253691);
+		draw_line(info, info->xp, info->yp, destance_to_wall.x_wall, destance_to_wall.y_wall, 0x253691);
 	else
 	{
 		sort_by_destance(info);	
 		 info->sprite_struct_all = info->sprite_struct_start;
-		 DDA(info, info->xp, info->yp, info->sprite_struct_all->x, info->sprite_struct_all->y, 0x253691);
+		 draw_line(info, info->xp, info->yp, info->sprite_struct_all->x, info->sprite_struct_all->y, 0x253691);
 
 	}
 	info->sprite = 0;
@@ -321,7 +321,7 @@ t_point	ray_casting_y(t_all_info *info)
 	return (point);
 }
 
-void DDA(t_all_info *info, int X1, int Y1, int X2, int Y2, int color) 
+void draw_line(t_all_info *info, int X1, int Y1, int X2, int Y2, int color)
 { 
     // calculate dx & dy 
     int dx =(int) X1 - X2; 

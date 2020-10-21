@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/20 18:43:45 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 20:40:35 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 	float	angle_sprite_player;
 	int		index_sprite;
 	float	index_f;
-	t_desst_to_wall wall_dest;
+	t_d_wall wall_dest;
 	int x_offsite;
 	t_sprite *save;
 	index = 0;
@@ -83,8 +83,9 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 		index = (z * (int)info->width) + (int)x; 
 		if (index >= 0 && index < (int)info->height * (int)info->width)
 		{
+			info->projection_wall = projection_wall;
+			info->data_3d[index] = get_texteur_value(info, c, wall_dest.type);
 
-			info->data_3d[index] = get_texteur_value(info, c, wall_dest.type, projection_wall);
 		}
 
 		c++;
@@ -138,13 +139,13 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 	return (0);
 }
 
-t_desst_to_wall	calc_destance_to_wall(t_all_info *info)
+t_d_wall	calc_destance_to_wall(t_all_info *info)
 {
 	t_point	xpoint;
 	t_point	ypoint;
 	float	xd;
 	float	yd;
-	t_desst_to_wall dest_to_wall;
+	t_d_wall dest_to_wall;
 
 	xpoint = ray_casting_x(info);
 

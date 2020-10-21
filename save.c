@@ -6,25 +6,27 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 17:24:08 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/18 18:25:41 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:43:39 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 int save(t_all_info *info)
 {
-    uint16_t bitcount = 24;
-    int width = (int) info->width;
-    int height = (int) info->height;
-    int width_in_bytes = ((width * bitcount + 31) / 32) * 4;
-    uint32_t imagesize = width_in_bytes * height;
-    uint32_t biSize = 40;
-    uint32_t bfOffBits = 54; 
-    uint32_t filesize = 54 + imagesize;
-    uint16_t biPlanes = 1;
-    //unsigned char header[54] = { 0 };
-    unsigned char *header = malloc(54);
+	uint16_t bitcount = 24;
+	int width = (int) info->width;
+	int height = (int) info->height;
+	int width_in_bytes = ((width * bitcount + 31) / 32) * 4;
+	uint32_t imagesize = width_in_bytes * height;
+	uint32_t biSize = 40;
+	uint32_t bfOffBits = 54; 
+	uint32_t filesize = 54 + imagesize;
+	uint16_t biPlanes = 1;
+	//unsigned char header[54] = { 0 };
+	unsigned char *header = malloc(54);
 
+	
 
     ft_memcpy(header, "BM", 2);
     ft_memcpy(header + 2 , &filesize, 4);
@@ -49,11 +51,11 @@ int save(t_all_info *info)
         }
     }
 
-    FILE *fout = fopen("save.bmp", "wb");
+	FILE *fout = fopen("save.bmp", "wb");
 
-    fwrite(header, 1, 54, fout);
-    fwrite((char*)buf, 1, imagesize, fout);
-    fclose(fout);
-    free(buf);
-    return 0;
+	fwrite(header, 1, 54, fout);
+	fwrite((char*)buf, 1, imagesize, fout);
+	fclose(fout);
+	free(buf);
+	return (0);
 }

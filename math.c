@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 13:25:57 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 20:39:26 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ float       destance_2_points(float x1, float y1, float x2, float y2)
 
 }
 
-t_equation_of_line  find_equation_of_line(float x1, float y1, float x2, float y2)
+t_eq_line  find_equation_of_line(float x1, float y1, float x2, float y2)
 {
-    t_equation_of_line equation;
+    t_eq_line equation;
     if (x1 != x2)
         equation.m = (y1 - y2) / (x1 - x2);
     else
@@ -46,10 +46,10 @@ t_equation_of_line  find_equation_of_line(float x1, float y1, float x2, float y2
     return (equation);
 }
 
-t_entersection_point             find_entersection_point_of_two_line(t_equation_of_line equation1, t_equation_of_line equation2, t_all_info *info)
+t_point             entersection_two_line(t_eq_line equation1, t_eq_line equation2, t_all_info *info)
 {
 
-   t_entersection_point     point;
+   t_point     point;
     
     point.x = (equation2.b - equation1.b) / (equation1.m - equation2.m);
     point.y = (point.x * equation1.m) + equation1.b;
@@ -71,8 +71,13 @@ t_entersection_point             find_entersection_point_of_two_line(t_equation_
             if (!equation1.is_perpendicular)
                 point.x = (point.y - equation1.b) / equation1.m;
                 
-            if (!equation2.is_perpendicular)
+            else if (!equation2.is_perpendicular)
                 point.x = (point.y - equation2.b) / equation2.m;
+            else
+            {
+                point.x = info->sprite_struct_all->x_center;
+                point.y = info->sprite_struct_all->y_center;
+            }
         }
 
     }
@@ -88,7 +93,7 @@ float   normalisie_angle(float angle)
     return(angle);
 }
 
-t_point find_entersection_point_ofline_and_circle(t_all_info *info,float x_center, float y_center, float raduis, t_equation_of_line line)
+t_point enter_line_circle(t_all_info *info,float x_center, float y_center, float raduis, t_eq_line line)
 {
     float x1, y1, x2, y2;
     float a, b,c ;
@@ -106,7 +111,7 @@ t_point find_entersection_point_ofline_and_circle(t_all_info *info,float x_cente
 
     if (line.is_perpendicular == 1)
     {
-        if (x_center != info->sprite_struct_all->x_center)
+        if (x_center != info->xp)
         {
             x1 = x_center;
             x2 = x1;
@@ -121,12 +126,12 @@ t_point find_entersection_point_ofline_and_circle(t_all_info *info,float x_cente
             y2 = y_center;
         }
     }
-    
-    // if (destance_2_points(x1, y1, 0, 0) > destance_2_points(x2, y2, 0, 0))
+     //printf("data is : x1 : %f, y1 : %f, X2 : %f, y2 : %f\n", x1, y1, x2, y2);
     if ((info->yp >= y_center && info->xp >= x_center) || (info->yp >= y_center && info->xp <= x_center))
     {
-       // printf("data is : x1 : %f, y1 : %f, X2 : %f, y2 : %f\n", x1, y1, x2, y2);
-        if (x1 > x2 || (x1 == x2 && y1 > y2))
+       //
+        //if (x1 > x2 || (x1 == x2 && y1 > y2))
+        if (x1 > x2 || (x1 == x2 && y1 < y2))
         {
            // printf("enter 0\n");
 

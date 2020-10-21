@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 13:26:27 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 20:39:26 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 	t_point begin, end, test_begin;
 
 	//player ray
-	t_equation_of_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
+	t_eq_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
 
 	//sprite center player 
 
-	t_equation_of_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
+	t_eq_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
 
 	// sprite center equation
-	t_equation_of_line sprite_center;
+	t_eq_line sprite_center;
 	if (player_sprite_center.m != 0)
 	{
 		sprite_center.is_perpendicular = 0;
@@ -68,24 +68,25 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 		sprite_center.b = ys;
 	}
 
-
-	/*printf("plyer sprite ray  EQ %f 	%f \n", player_sprite.m, player_sprite.b);
-	printf("plyer sprite center  EQ %f 	%f \n", player_sprite_center.m, player_sprite_center.b);
-
-	printf("sprite EQ %f 	%f \n", sprite_center.m, sprite_center.b);*/
+	if (player_sprite.m == 0)
+	{
+		player_sprite.is_perpendicular = 1;
+		player_sprite.m = 0;
+		player_sprite.b = ys;
+	}
 	//entersection new of ray view
 	//xv = xs * cosf(angle * R_P) - (ys * sinf(angle * R_P));
 	//yv = xs * sinf(angle * R_P) + (ys * cosf(angle * R_P));
 
-	xv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).x;
-	yv = find_entersection_point_of_two_line(sprite_center, player_sprite, info).y;
+	xv = entersection_two_line(sprite_center, player_sprite, info).x;
+	yv = entersection_two_line(sprite_center, player_sprite, info).y;
 	//printf("casting ray is  %f +  %f  \n", xv, yv);
 
 	// begin point 
 	//try to chose the small one 
 
 	//intersection cercl and line 
-	test_begin = find_entersection_point_ofline_and_circle(info, xs, ys, info->size / 2, sprite_center);
+	test_begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
 
 	/*begin.x = xs + (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
 	if (begin.x > xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2))))
@@ -93,17 +94,8 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 	begin.y = begin.x * sprite_center.m + sprite_center.b;*/
 
 	// player view ray
-	t_equation_of_line player_view;
+	t_eq_line player_view;
 
-	//end point 
-	if (xs > begin.x)
-		end.x = begin.x - (xs - begin.x);
-	else
-		end.x = xs - (begin.x - xs);
-	if (ys > begin.y)
-		end.y = begin.y - (ys - begin.y);
-	else
-		end.y = ys - (begin.y - ys);
 
 	begin.x = test_begin.x;
 	begin.y = test_begin.y;
@@ -115,15 +107,21 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 
 	//x_offsite = (info->size / 2) - destance_2_points(info->sprite_struct_all->x_center, info->sprite_struct_all->y_center, cos((info->angle) * R_P) * destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center , info->sprite_struct_all->y_center) + info->xp, sin((info->angle) * R_P) *  destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center, info->sprite_struct_all->y_center) + info->yp);
 	x_offsite = tst_x;
-	get_x_f =  x_offsite / info->size *  info->sprite_w;
+	
+	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
 	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
-	get = (int)get_y_f * (int)info->sprite_w + (int)get_x_f;
-	//printf("0player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
+	get = ((int)get_y_f * info->sprite_w) + (int)get_x_f;
 
-	if ( destance_2_points(xs, ys, xv, yv) <= info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
+
+
+	
+	
+	
+
+		if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
 		{	
 			//printf("all dest is %f\n", destance_2_points(begin.x, begin.y, end.x, end.y));
-			//printf("begin  is  %f +  %f dest is %f\n", begin.x, begin.y, tst_x);
+			//printf("sprite center  is  %f  %f %d\n", sprite_center.m, sprite_center.b, sprite_center.is_perpendicular);
 			//printf("player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
 
 			if (x_offsite > 0.0 && x_offsite < info->size)

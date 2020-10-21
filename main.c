@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 11:33:13 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 20:12:12 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/21 18:27:15 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,11 @@ int		main(int argc, char *argv[])
 	ret += get_ea_texteur_from_file(info);
 	ret += get_we_texteur_from_file(info);
 	ret += get_so_texteur_from_file(info);
-	
-
-	/////
-
 	if (ret != 4)
-	{		
+	{
 		set_error(1);
 		return -1;
-	}	
-
+	}
 	ret += get_sprite_from_file(info);
 	if (ret != 5)
 	{
