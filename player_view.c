@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:40:35 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,31 @@
 int			draw_image_view(t_all_info *info)
 {
 
-	float	x_res, y_res, beta, x_start, y_start, percentage;
+	double	x_res, y_res, beta, x_start, y_start, percentage;
 	t_eq_line equation;
 	t_eq_line equation_center;
 	t_eq_line equation_of_ray;
 	t_entersection_point	point;
 	t_point start_point;
-	float xrs, yrs;
+	double xrs, yrs;
 	t_entersection_point intersection_point_result;
 	t_d_wall	destance_to_wall;
 	destance_to_wall = calc_destance_to_wall(info);
-	float	angle_player_center;
-	float	angle_player_ray;
-	float	angle_rotation;
-	float	angle_result;
-	float	intersection_x;
-	float	intersection_y;
-	float	point_start_x;
-	float	point_start_y;
-	float	start_x;
-	float	start_y;
+	double	angle_player_center;
+	double	angle_player_ray;
+	double	angle_rotation;
+	double	angle_result;
+	double	intersection_x;
+	double	intersection_y;
+	double	point_start_x;
+	double	point_start_y;
+	double	start_x;
+	double	start_y;
 	int		get_x;
 	int		get_y;
 	int		get;
-	float	get_x_f, get_y_f;
-	float	x_offsite;
+	double	get_x_f, get_y_f;
+	double	x_offsite;
 
 
 	if (info->sprite == 0)
@@ -59,8 +59,8 @@ int			draw_image_view(t_all_info *info)
 
 int				draw_image_view_angle(t_all_info *info)
 {
-	float save_angle;
-	float alpha;
+	double save_angle;
+	double alpha;
 
 	save_angle = info->angle;
 	 alpha = -30;
@@ -93,17 +93,17 @@ int free_linked_list(t_sprite *list)
 		
 t_point	ray_casting_x(t_all_info *info)
 {
-	float	x;
-	float	y;
-	float	xa;
-	float 	ya;
+	double	x;
+	double	y;
+	double	xa;
+	double 	ya;
 	int		index_x;
 	int		index_y;
 	int		index;
 	t_point	point;
 	int		divs;
 	int		moins;
-	float index_x_f, index_y_f;
+	double index_x_f, index_y_f;
 	int sprite_center_x, sprite_center_y;
 	t_sprite *sprite_data;
 	int type;
@@ -145,16 +145,16 @@ t_point	ray_casting_x(t_all_info *info)
 		printf("tst\n");
 	}*/
 	
-	if (cosf(info->angle * R_P) > 0)
+	if (cos(info->angle * R_P) > 0)
 		x += info->size;
 	else
 		moins = 1;
-	y = info->yp + (x - info->xp) * tanf(info->angle * R_P);
-	if (cosf(info->angle * R_P) > 0)
+	y = info->yp + (x - info->xp) * tan(info->angle * R_P);
+	if (cos(info->angle * R_P) > 0)
 		xa = info->size;
 	else
 		xa = -1 * info->size;
-	ya = xa * tanf(info->angle * R_P);
+	ya = xa * tan(info->angle * R_P);
 	while (x >= 0.0 && y >= 0.0 && x < info->width_number * info->size && y < info->height_number * info->size)
 	{
 
@@ -224,10 +224,10 @@ t_point	ray_casting_x(t_all_info *info)
 
 t_point	ray_casting_y(t_all_info *info)
 {
-	float		x;
-	float		y;
-	float		xa;
-	float 		ya;
+	double		x;
+	double		y;
+	double		xa;
+	double 		ya;
 	t_point		point;
 	int			divs;
 	int			moins;
@@ -243,20 +243,20 @@ t_point	ray_casting_y(t_all_info *info)
 	divs *= (int)info->size; 
 	y = divs;
 
-	if (sinf(info->angle * R_P) > 0)
+	if (sin(info->angle * R_P) > 0)
 		y += info->size;
 	else
 		moins = 1;
-	x = info->xp + ((y - info->yp) / tanf(info->angle * R_P));
+	x = info->xp + ((y - info->yp) / tan(info->angle * R_P));
 
-	if (sinf(info->angle * R_P) > 0)
+	if (sin(info->angle * R_P) > 0)
 		ya = info->size;
 	else
 		ya = -1 * info->size;
-		if (sinf(info->angle * R_P) == 1 || sinf(info->angle * R_P) == -1)
+		if (sin(info->angle * R_P) == 1 || sin(info->angle * R_P) == -1)
 			xa = 0;
 		else 
-			xa = ya / tanf(info->angle * R_P);
+			xa = ya / tan(info->angle * R_P);
 
 	while (x >= 0.0 && y >= 0.0 && x < info->width_number * info->size && y < info->height_number * info->size)
 	 { 
@@ -331,11 +331,11 @@ void draw_line(t_all_info *info, int X1, int Y1, int X2, int Y2, int color)
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
   
     // calculate increment in x & y for each steps 
-    float Xinc = dx / (float) steps; 
-    float Yinc = dy / (float) steps; 
+    double Xinc = dx / (double) steps; 
+    double Yinc = dy / (double) steps; 
     // Put pixel for each step 
-    float X = X2; 
-    float Y = Y2; 
+    double X = X2; 
+    double Y = Y2; 
 	int		index_y;
 	int		index_x;
 	int 	index;
@@ -353,14 +353,14 @@ void draw_line(t_all_info *info, int X1, int Y1, int X2, int Y2, int color)
     } 
 } 
 
-float			destance(t_all_info *info, int x, int y)
+double			destance(t_all_info *info, int x, int y)
 {	
-	float	destance;
-	float	xx;
-	float	yy;
+	double	destance;
+	double	xx;
+	double	yy;
 	
 	xx = (info->xp - x) * (info->xp - x);
 	yy = (info->yp - y) * (info->yp - y);
-	destance = sqrtf(xx + yy);
+	destance = sqrt(xx + yy);
 	return (destance);
 }

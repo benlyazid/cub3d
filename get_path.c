@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:10:52 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 19:42:10 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 08:30:10 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_no_texteur_path(t_all_info *info)
 	char	*path;
 
 	path = NULL;
+	i = 0;
 	while (info->file[i])
 	{
 		if (info->file[i] == 'N' && info->file[i + 1] == 'O' &&

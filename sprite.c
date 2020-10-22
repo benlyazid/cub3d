@@ -6,41 +6,29 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:39:26 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:37:19 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #define R_P ( M_PI / 180)
 
-int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, float x)
+int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, double x)
 {
 	int 	i;
-	float	angle_player_center;
-	float	angle_player_ray;
-	float	angle_rotation;
-	float	angle_result;
-	float	intersection_x;
-	float	intersection_y;
-	float	point_start_x;
-	float	point_start_y;
-	float	start_x;
-	float	start_y;
-	float	x_offsite;
+	double	x_offsite;
 	int		get_x;
 	int		get_y;
 	int		get;
-	float	get_x_f, get_y_f;
+	double	get_x_f, get_y_f;
 
-	float xp, yp, xs, ys, xv, yv, xx, yy;
-	float teta, angle;
-	float tst_x;
+	double xp, yp, xs, ys, xv, yv, xx, yy;
+	double tst_x;
 
 	xp = info->xp;
 	yp = info->yp;
 	xs = info->sprite_struct_all->x_center;
 	ys = info->sprite_struct_all->y_center;
-	angle = info->save_angle - info->angle;
 	xx = info->sprite_struct_all->x;
 	yy = info->sprite_struct_all->y;
 	t_point begin, end, test_begin;
@@ -74,28 +62,17 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 		player_sprite.m = 0;
 		player_sprite.b = ys;
 	}
-	//entersection new of ray view
-	//xv = xs * cosf(angle * R_P) - (ys * sinf(angle * R_P));
-	//yv = xs * sinf(angle * R_P) + (ys * cosf(angle * R_P));
-
 	xv = entersection_two_line(sprite_center, player_sprite, info).x;
 	yv = entersection_two_line(sprite_center, player_sprite, info).y;
 	//printf("casting ray is  %f +  %f  \n", xv, yv);
 
-	// begin point 
-	//try to chose the small one 
 
-	//intersection cercl and line 
 	test_begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
 
-	/*begin.x = xs + (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
-	if (begin.x > xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2))))
-		begin.x =  xs - (info->size / 2) * sqrtf(1 / (1 + powf(sprite_center.m, 2)));
-	begin.y = begin.x * sprite_center.m + sprite_center.b;*/
+
 
 	// player view ray
 	t_eq_line player_view;
-
 
 	begin.x = test_begin.x;
 	begin.y = test_begin.y;
@@ -110,19 +87,18 @@ int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, fl
 	
 	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
 	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
-	get = ((int)get_y_f * info->sprite_w) + (int)get_x_f;
+	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
 
+	int gx, gy;
 
-
-	
-	
-	
-
+	gx = (x_offsite / info->size)  *  info->sprite_w;
+	gy = (z_sprite  / info->projection_sprite) * info->sprite_h;
+	get = gy * info->sprite_w + gx;
 		if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
 		{	
 			//printf("all dest is %f\n", destance_2_points(begin.x, begin.y, end.x, end.y));
+			printf("player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
 			//printf("sprite center  is  %f  %f %d\n", sprite_center.m, sprite_center.b, sprite_center.is_perpendicular);
-			//printf("player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
 
 			if (x_offsite > 0.0 && x_offsite < info->size)
 			{

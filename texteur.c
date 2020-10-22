@@ -6,16 +6,16 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:31:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 19:39:21 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:26:46 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_x_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
+int	get_x_value(t_all_info *info, double img_size_w, double img_size_h, int *data)
 {
-	float	x0;
-	float	y0;
+	double	x0;
+	double	y0;
 	int		index_0;
 
 	x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
@@ -26,10 +26,10 @@ int	get_x_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
 	return (0);
 }
 
-int	get_y_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
+int	get_y_value(t_all_info *info, double img_size_w, double img_size_h, int *data)
 {
-	float	x0;
-	float	y0;
+	double	x0;
+	double	y0;
 	int		index_0;
 
 	x0 = (info->y_wall % (int)info->size) * img_size_w / info->size;
@@ -42,16 +42,16 @@ int	get_y_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
 
 int	get_texteur_value(t_all_info *info, int z, int type)
 {
-	float	x0;
-	float	y0;
+	double	x0;
+	double	y0;
 	int		index_0;
-	float	angle;
+	double	angle;
 
 	info->z = z;
 	angle = abs((int)info->angle % 360);
 	if (type == 'x')
 	{
-		if (angle < 360 && (int)info->angle % 360 > 180)
+		if (angle < 360 && angle > 180)
 			return (get_x_value(info, info->img_wno, info->img_hno,
 			info->data_texteur_no));
 		else

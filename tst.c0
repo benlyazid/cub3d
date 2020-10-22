@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main()
+{
+	/*
+	y = ax + b
+
+	(xs + x)^2 + (ys + y)^2 = r^2
+	xs^2 - 2xxs x^2 + ys^2 - 2yys  + y^2 = r^2
+	x^2 - 2xxs + xs^2 + ys^2 - 2ys(ax + b) + (ax + b)^2 = r^2
+	x^2 - 2xxs + xs^2 + ys^2 - 2ysax - 2ysb + ax^2 + 2abx + b^2 = r^2
+
+	(x^2 + ax^2)  +
+
+	x(- 2xs - 2ysa + 2ab) + 
+
+	(xs^2  + ys^2 - 2ysb + b^2 - r^2) = 0
+	(xs^2 - r^2) = 0
+	*/
+	double xs = 500;
+	double ys = 220;
+	double lm = -186.871155;
+	double lb = 93655.578125;
+	double r = 20;
+	double a, b, c, x1, y1, x2, y2;
+	
+    a = pow(lm, 2) + 1;
+
+	b = ((- 2 * xs) + (2 * lm * lb) - (2 * ys * lm));
+
+	c = (pow(lb, 2) -(2 * ys * lb) + (pow(ys, 2) - pow(r, 2) + pow(xs, 2)));
+
+    x1 = (-b - sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+    x2 = (-b + sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+	y1 = ((lm * x1) + lb);
+    y2 = ((lm * x2) + lb);
+
+	printf("x1 %f, y1 %f, x2 %f, y2 %f\n\n", x1, y1, x2, y2);
+
+
+
+    a = pow(lm, 2) + 1;
+    b = (2 * lm * (lb - ys)) - (2 * xs);
+    c = pow(lb - ys, 2) - pow(r, 2) + pow(xs, 2);
+	x1 = (-b - sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+    x2 = (-b + sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+    y1 = ((lm * x1) + lb);
+    y2 = ((lm * x2) + lb);
+	printf("x1 %f, y1 %f, x2 %f, y2 %f\n\n", x1, y1, x2, y2);
+
+	x1 = 499.897;
+	x2 = 500.103;
+    y1 = ((lm * x1) + lb);
+	//printf("a %f, b %f, c %f\n", a, b, c);
+    y2 = ((lm * x2) + lb);
+	printf("x1 %f, y1 %f, x2 %f, y2 %f\n", x1, y1, x2, y2);
+
+	return 0;
+}

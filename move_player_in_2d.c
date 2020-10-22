@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 19:34:07 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int			check_abilitie_to_move(t_all_info *info, int key)
 	int		index_x;
 	int		index_y;
 	int 	index;
-	float	angle;
+	double	angle;
 
 	key = 0;
 	angle = 0;
 	while (angle <= 2 * M_PI)
 	{
-	index_x = ((int)info->xp + ((info->size / 4) * (int)cosf(angle))) / (int)info->size;
-	index_y = ((int)info->yp + ((info->size / 4) * (int)sinf(angle))) / (int)info->size;	
+	index_x = ((int)info->xp + ((info->size / 4) * (int)cos(angle))) / (int)info->size;
+	index_y = ((int)info->yp + ((info->size / 4) * (int)sin(angle))) / (int)info->size;	
 
 	index = (index_y * (int)info->width_number + index_x);
 
@@ -39,9 +39,9 @@ int			check_abilitie_to_move(t_all_info *info, int key)
 
 int			effect_move(int key, t_all_info *info)
 {
-	float xp;
-	float yp;
-	float angle;
+	double xp;
+	double yp;
+	double angle;
 	
 	if (key ==53 || key == 2 || key == 0 || key == 13 || key == 1)
 	{
@@ -63,7 +63,6 @@ int			effect_move(int key, t_all_info *info)
 			info->angle = (int)info->angle % 360;
 		if (info->angle == 0)
 			info->angle = 360 ;
-		
 		effect_key_for_move(info, key);
 		if (check_abilitie_to_move(info, key))
 		{
@@ -82,13 +81,13 @@ int		effect_key_for_move(t_all_info *info, int key)
 
 	if (key == 13) // w
 	{
-		info->xp += ((info->size / 5) * cosf(info->angle * M_PI / 180));
-		info->yp += ((info->size / 5) * sinf(info->angle * M_PI / 180)); 
+		info->xp += ((info->size / 5) * cos(info->angle * M_PI / 180));
+		info->yp += ((info->size / 5) * sin(info->angle * M_PI / 180)); 
 	}
 	if (key == 1) //s
 	{
-		info->xp -= ((info->size / 5) * cosf(info->angle * M_PI / 180));
-		info->yp -= ((info->size / 5) * sinf(info->angle * M_PI / 180)); 
+		info->xp -= ((info->size / 5) * cos(info->angle * M_PI / 180));
+		info->yp -= ((info->size / 5) * sin(info->angle * M_PI / 180)); 
 	}
 	
 	return (0);

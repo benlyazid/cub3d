@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:45:19 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 
 typedef struct	s_desst_to_wall
 {
-	float	destance;
+	double	destance;
 	int		type;
-	float	x_wall;
-	float	y_wall;
+	double	x_wall;
+	double	y_wall;
 	int		sprite;
 
 }				t_d_wall;
@@ -42,11 +42,11 @@ typedef	struct	s_color
 
 typedef	struct	s_sprite
 {
-	float			x;
-	float			y;
-	float			x_center;
-	float			y_center;
-	float			dest;
+	double			x;
+	double			y;
+	double			x_center;
+	double			y_center;
+	double			dest;
 	int				visible;
 	struct s_sprite	*next;
 
@@ -60,20 +60,20 @@ typedef	struct	s_all_info
 	char		*file;
 	int			*mp;
 	int			sprite_alloc;
-	float		width;
-	float		height;
-	float		width_size;
-	float		height_size;
-	float		width_size_mini;
-	float		height_size_mini;
-	float		width_number;
-	float		height_number;
+	double		width;
+	double		height;
+	double		width_size;
+	double		height_size;
+	double		width_size_mini;
+	double		height_size_mini;
+	double		width_number;
+	double		height_number;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	float		xp;
-	float		yp;
+	double		xp;
+	double		yp;
 	int			vision;
-	float		angle;
+	double		angle;
 	void		*img;
 	void		*img_3d;
 	int			*data;
@@ -98,36 +98,36 @@ typedef	struct	s_all_info
 	int			img_wea;
 	int			*data_sprite;
 	void		*sprite_img;
-	float		sprite_h;
-	float		sprite_w;
+	double		sprite_h;
+	double		sprite_w;
 	int			sprite;
-	float		projection_sprite;
-	float		save_angle;
-	float		projection_wall;
+	double		projection_sprite;
+	double		save_angle;
+	double		projection_wall;
 	t_sprite	*sprite_struct_all;
 	t_sprite	*sprite_struct_start;
-	float		size;
+	double		size;
 	int			tst;
 	int			z;
 }				t_all_info;
 
 typedef struct	s_point
 {
-	float		x;
-	float		y;
+	double		x;
+	double		y;
 }				t_point;
 
 typedef struct	s_equation_of_line
 {
-	float	m;
-	float	b;
+	double	m;
+	double	b;
 	int		is_perpendicular;
 }				t_eq_line;
 
 typedef struct	s_intersection_point
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }				t_entersection_point;
 
 char			*get_maps(char *maps);
@@ -151,13 +151,13 @@ int				draw_image_view(t_all_info *info);
 int				effect_key_for_move(t_all_info *info, int key);
 int				draw_image_view_angle(t_all_info *info);
 t_d_wall		calc_destance_to_wall(t_all_info *info);
-int				draw_3d_image(t_all_info *info, float x, float alpha);
+int				draw_3d_image(t_all_info *info, double x, double alpha);
 int				draw_all_image_3d(t_all_info *info);
-float			ray_casting(t_all_info *info);
+double			ray_casting(t_all_info *info);
 t_point			ray_casting_x(t_all_info *info);
 t_point			ray_casting_y(t_all_info *info);
 void			draw_line(t_all_info *inf, int a, int b, int c, int d, int cr);
-float			destance(t_all_info *info, int x, int y);
+double			destance(t_all_info *info, int x, int y);
 int				draw_image_surface_mini(t_all_info *info);
 int				draw_image_player_mini(t_all_info *info);
 t_point			ray_casting_y_mini(t_all_info *info);
@@ -166,21 +166,21 @@ int				ray_casting_mini(t_all_info *info);
 int				draw_image_view_angle_mini(t_all_info *info);
 void			draw_line_mini(t_all_info *info, int x1, int y1, int color);
 int				get_texteur_value(t_all_info *info, int	z, int type);
-int				get_sprite_value(t_all_info *d, float z, int i, int t, float x);
+int				get_sprite_value(t_all_info *d, double z, int i, int t, double x);
 int				rm_all(t_all_info *info);
-float			value_angle_2_point (int a, int b, t_all_info *i, int c, int d);
-float			destance_2_points(float x1, float y1, float x2, float y2);
-t_eq_line		find_equation_of_line(float x1, float y1, float x2, float y2);
+double			value_angle_2_point (int a, int b, t_all_info *i, int c, int d);
+double			destance_2_points(double x1, double y1, double x2, double y2);
+t_eq_line		find_equation_of_line(double x1, double y1, double x2, double y2);
 t_point			entersection_two_line(t_eq_line a, t_eq_line b, t_all_info *i);
-float			normalisie_angle(float angle);
-t_point			enter_line_circle(t_all_info *i, float x, float y,
-float r, t_eq_line l);
+double			normalisie_angle(double angle);
+t_point			enter_line_circle(t_all_info *i, double x, double y,
+double r, t_eq_line l);
 int				get_data_from_maps(int	x, int	y, t_all_info *info);
 int				draw_sprite(t_all_info *info);
 t_sprite		*add_to_last (t_sprite *sprite, t_sprite *sprite_data);
 int				sort_by_destance(t_all_info *info);
 int				draw_sprite(t_all_info *info);
-int				get_type_from_maps(float x, float y, t_all_info *info);
+int				get_type_from_maps(double x, double y, t_all_info *info);
 int				get_player_info(t_all_info *info);
 int				get_sprite_from_file(t_all_info *info);
 int				get_no_texteur_from_file(t_all_info *info);
@@ -199,8 +199,8 @@ char			*get_no_texteur_path(t_all_info *info);
 char			*get_so_texteur_path(t_all_info *info);
 char			*get_we_texteur_path(t_all_info *info);
 char			*get_ea_texteur_path(t_all_info *info);
-int				get_x_value(t_all_info *info, float img_size_w, float
+int				get_x_value(t_all_info *info, double img_size_w, double
 img_size_h, int *data);
-int				get_y_value(t_all_info *info, float img_size_w, float
+int				get_y_value(t_all_info *info, double img_size_w, double
 img_size_h, int *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:54:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 19:56:18 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	draw_block(int x, int y, int color, t_all_info *info)
 }
 
 
-int get_type_from_maps(float x, float y, t_all_info *info)
+int get_type_from_maps(double x, double y, t_all_info *info)
 {
 	int	index;
 	int	index_x;
@@ -134,11 +134,11 @@ int	rm_all(t_all_info *info)
 
 int	draw_image_surface(t_all_info *info)
 {
-	float 	x;
-	float	y;
+	double 	x;
+	double	y;
 	int 	index;
-	float	index_x;
-	float	index_y;
+	double	index_x;
+	double	index_y;
 	int 	index_data;
 	int 	i;
 

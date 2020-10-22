@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:40:35 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 #define R_P ( M_PI / 180)
 
-int		draw_3d_image(t_all_info *info, float x, float alpha)
+int		draw_3d_image(t_all_info *info, double x, double alpha)
 {
-	float	destance_to_the_wall;
-	float	destance_player_projection;
-	float	projection_wall;
+	double	destance_to_the_wall;
+	double	destance_player_projection;
+	double	projection_wall;
 	int		start;
 	int		z;
 	int		index;
 	int		c;
 	int	 end;
-	float	destance_to_sprite;
+	double	destance_to_sprite;
 	int 	sprite_start, sprite_end, z_sprite;
 	int		get;
-	float	angle_sprite_player;
+	double	angle_sprite_player;
 	int		index_sprite;
-	float	index_f;
+	double	index_f;
 	t_d_wall wall_dest;
 	int x_offsite;
 	t_sprite *save;
@@ -43,8 +43,8 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 	info->x_wall = wall_dest.x_wall;
 	info->y_wall = wall_dest.y_wall;
 
-	destance_to_the_wall = wall_dest.destance * cosf (alpha * R_P);
-	destance_player_projection = (info->width / 2) / tanf (M_PI / 6 ); // /2
+	destance_to_the_wall = wall_dest.destance * cos (alpha * R_P);
+	destance_player_projection = (info->width / 2) / tan (M_PI / 6 ); // /2
 
 	if(wall_dest.type != 'z')
 		projection_wall = destance_player_projection * info->size / destance_to_the_wall;
@@ -143,8 +143,8 @@ t_d_wall	calc_destance_to_wall(t_all_info *info)
 {
 	t_point	xpoint;
 	t_point	ypoint;
-	float	xd;
-	float	yd;
+	double	xd;
+	double	yd;
 	t_d_wall dest_to_wall;
 
 	xpoint = ray_casting_x(info);
@@ -196,9 +196,9 @@ t_d_wall	calc_destance_to_wall(t_all_info *info)
 
 int				draw_all_image_3d(t_all_info *info)
 {
-	float save_angle;
-	float alpha;
-	float	x;
+	double save_angle;
+	double alpha;
+	double	x;
 	save_angle = info->angle;
 	alpha = -30;
 	x = 0;
@@ -212,14 +212,6 @@ int				draw_all_image_3d(t_all_info *info)
 		info->angle = save_angle;
 		alpha+= (60 / info->width);
 		x+= 1;
-		//free(info->sprite_struct_start);
-		
-		/*while (info->sprite_struct_start)
-		{
-			free(info->sprite_struct_start);
-			info->sprite_struct_start = info->sprite_struct_start->next;
-		}*/
-		
 	}
 	printf("finish\n\n\n\n");
 	 info->angle = save_angle;

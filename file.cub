@@ -1,5 +1,5 @@
-R 4440000 8000
-NO /Users/kbenlyaz/Desktop/wall1.xpm
+R 400 800
+NO /Users/kbenlyaz/Desktop/wall0.xpm
 SO /Users/kbenlyaz/Desktop/wall2.xpm
 WE /Users/kbenlyaz/Desktop/wall3.xpm
 EA /Users/kbenlyaz/Desktop/wall4.xpm
@@ -14,8 +14,8 @@ C 255,102,102
  1000000000001111111111
 111110000000000000000001
      1111100000000011111111
-        1E0002000001
-        100000000001     11111
+        10002000001
+        100000000N01     11111
         11111111000111111120021
         111111110000000000000011111111 
                 111111100000000000000111111         

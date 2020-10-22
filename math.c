@@ -6,37 +6,42 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:39:26 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 #define R_P ( M_PI / 180)
-float   value_angle_2_point (int x1, int y1, t_all_info *info, int x2, int y2)
+double   value_angle_2_point (int x1, int y1, t_all_info *info, int x2, int y2)
 {
-    float   angle;
-    float   sprite;
-    float   player;
-    float   sprite_amgnitude;
-    float   player_magnitude;
+    double   angle;
+    double   sprite;
+    double   player;
+    double   sprite_amgnitude;
+    double   player_magnitude;
 
   
     angle = atan2f(y1 - y2, x1 - x2);
     return (angle);
 }
 
-float       destance_2_points(float x1, float y1, float x2, float y2)
+double       destance_2_points(double x1, double y1, double x2, double y2)
 {
-    float   destance;
-    destance = sqrtf(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+    double   destance;
+    destance = sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
     return (destance);
 
 }
 
-t_eq_line  find_equation_of_line(float x1, float y1, float x2, float y2)
+t_eq_line  find_equation_of_line(double a, double b, double c, double d)
 {
     t_eq_line equation;
+	double x1, y1, x2, y2;
+	x1 = a;
+	y1 = b;
+	x2 = c;
+	y2 = d;
     if (x1 != x2)
         equation.m = (y1 - y2) / (x1 - x2);
     else
@@ -84,7 +89,7 @@ t_point             entersection_two_line(t_eq_line equation1, t_eq_line equatio
     return (point);
 }
 
-float   normalisie_angle(float angle)
+double   normalisie_angle(double angle)
 {
     if (angle > 2 * M_PI)
         angle -= (2 * M_PI);
@@ -93,22 +98,24 @@ float   normalisie_angle(float angle)
     return(angle);
 }
 
-t_point enter_line_circle(t_all_info *info,float x_center, float y_center, float raduis, t_eq_line line)
+t_point enter_line_circle(t_all_info *info,double x_c, double y_c, double r, t_eq_line line)
 {
-    float x1, y1, x2, y2;
-    float a, b,c ;
+    double x1, y1, x2, y2, x_center, y_center, raduis, lm, lb;
+    double a, b,c ;
     t_point point;
-    a = powf(line.m, 2) + 1;
-
-    b = (2 * line.m * (line.b - y_center)) - (2 * x_center);
-
-    c = powf(line.b - y_center, 2) - powf(raduis, 2) + powf(x_center, 2);
-
-    x1 = (-b - sqrtf(powf(b, 2) - (4 * a * c))) / (2 * a);
-    x2 = (-b + sqrtf(powf(b, 2) - (4 * a * c))) / (2 * a);
-    y1 = ((line.m * x1) + line.b);
-    y2 = ((line.m * x2) + line.b);
-
+	x_center = x_c;
+	y_center = y_c;
+	raduis =r;
+	lm = line.m;
+	lb = line.b;
+    a = pow(lm, 2) + 1;
+    b = (2 * lm * (lb - y_center)) - (2 * x_center);
+    c = pow(lb - y_center, 2) - pow(raduis, 2) + pow(x_center, 2);
+    x1 = (-b - sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+    x2 = (-b + sqrt(pow(b, 2) - (4 * a * c))) / (2 * a);
+    y1 = ((lm * x1) + lb);
+    y2 = ((lm * x2) + lb);
+	//printf("x1 %f, y1 %f, x2 %f, y2 %f\n", x1, y1, x2, y2);
     if (line.is_perpendicular == 1)
     {
         if (x_center != info->xp)
@@ -127,11 +134,30 @@ t_point enter_line_circle(t_all_info *info,float x_center, float y_center, float
         }
     }
      //printf("data is : x1 : %f, y1 : %f, X2 : %f, y2 : %f\n", x1, y1, x2, y2);
-    if ((info->yp >= y_center && info->xp >= x_center) || (info->yp >= y_center && info->xp <= x_center))
+    //if ((info->yp >= y_center && info->xp >= x_center) || (info->yp >= y_center && info->xp <= x_center))
+    if ((info->yp >= y_center && info->xp <= x_center))
     {
        //
         //if (x1 > x2 || (x1 == x2 && y1 > y2))
-        if (x1 > x2 || (x1 == x2 && y1 < y2))
+        if (x1 > x2 || (x1 == x2 && y1 > y2)) // back to origen <
+        {
+           // printf("enter 0\n");
+
+            point.x = x2;
+            point.y = y2;
+        }
+        else
+        {
+           // printf("enter 1\n");
+            point.x = x1;
+            point.y = y1;
+        }
+    }
+	else if (info->yp >= y_center && info->xp >= x_center)
+    {
+       //
+        //if (x1 > x2 || (x1 == x2 && y1 > y2))
+        if (x1 > x2 || (x1 == x2 && y1 < y2)) // back to origen <
         {
            // printf("enter 0\n");
 

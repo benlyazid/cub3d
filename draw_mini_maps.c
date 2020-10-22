@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:02:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 20:28:15 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 int	draw_image_surface_mini(t_all_info *info)
 {
-	float 	x;
-	float	y;
+	double 	x;
+	double	y;
 	int 	index;
-	float	index_x;
-	float	index_y;
+	double	index_x;
+	double	index_y;
 	int 	index_data;
 	y = 0;	
 	while (info->height > (int)y * 5)
@@ -49,8 +49,8 @@ int	draw_image_surface_mini(t_all_info *info)
 
 int			draw_image_player_mini(t_all_info *info)
 {
-	float	angle;
-	float 	r;
+	double	angle;
+	double 	r;
 	int	x;
 	int	y;
 	int		andex;
@@ -75,8 +75,8 @@ int			draw_image_player_mini(t_all_info *info)
 
 int				draw_image_view_angle_mini(t_all_info *info)
 {
-	float save_angle;
-	float alpha;
+	double save_angle;
+	double alpha;
 
 	save_angle = info->angle;
 	 alpha = -30;
@@ -95,8 +95,8 @@ int ray_casting_mini(t_all_info *info)
 {
 	t_point	xpoint;
 	t_point	ypoint;
-	float	xd;
-	float	yd;
+	double	xd;
+	double	yd;
 
 	xpoint = ray_casting_x_mini(info);
 	ypoint = ray_casting_y_mini(info);
@@ -121,10 +121,10 @@ int ray_casting_mini(t_all_info *info)
 
 t_point	ray_casting_x_mini(t_all_info *info)
 {
-	float	x;
-	float	y;
-	float	xa;
-	float 	ya;
+	double	x;
+	double	y;
+	double	xa;
+	double 	ya;
 	int		index_x;
 	int		index_y;
 	int		index;
@@ -170,10 +170,10 @@ t_point	ray_casting_x_mini(t_all_info *info)
 
 t_point	ray_casting_y_mini(t_all_info *info)
 {
-	float		x;
-	float		y;
-	float		xa;
-	float 		ya;
+	double		x;
+	double		y;
+	double		xa;
+	double 		ya;
 	t_point		point;
 	int			divs;
 	int			moins;
@@ -230,11 +230,11 @@ void draw_line_mini(t_all_info *info, int X1, int Y1, int color)
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
   
     // calculate increment in x & y for each steps 
-    float Xinc = dx / (float) steps; 
-    float Yinc = dy / (float) steps; 
+    double Xinc = dx / (double) steps; 
+    double Yinc = dy / (double) steps; 
     // Put pixel for each step 
-    float X = info->xp / 5; 
-    float Y = info->yp / 5; 
+    double X = info->xp / 5; 
+    double Y = info->yp / 5; 
 	int		index_y;
 	int		index_x;
 	int 	index;

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 10:03:05 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int move_player(t_all_info *info)
 
 int			draw_image_player(t_all_info *info)
 {
-	float	angle;
-	float 	r;
+	double	angle;
+	double 	r;
 	int	x;
 	int	y;
 	int		andex;
@@ -45,8 +45,8 @@ int			draw_image_player(t_all_info *info)
 		r = 10;
 		while (r >= 0)
 		{
-			x = (int)(((info->xp) +(r * cosf(angle))));
-			y = (int)(((info->yp) + (r * sinf(angle))));
+			x = (int)(((info->xp) +(r * cos(angle))));
+			y = (int)(((info->yp) + (r * sin(angle))));
 			andex = round((y * info->width) + x);
 			info->data[andex] = 0x16FF00;			
 			r -= 1;

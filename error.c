@@ -9,6 +9,7 @@ void set_error(int type_of_error)
 	//correct the key
 	// if resolution in big than int 
 	//sprite
+	//shec file is .cub
 
 // line with all spaces is not valide
 	char *error = ft_strdup("error\n");
