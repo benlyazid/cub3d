@@ -5,12 +5,12 @@ void set_error(int type_of_error)
 
 	//norm
 	//makefile
-	//resolution is 0
 	//correct the key
 	// if resolution in big than int 
 	//sprite
 	//shec file is .cub
-
+	//correct texteur view
+	//free all in the end
 // line with all spaces is not valide
 	char *error = ft_strdup("error\n");
 	ft_putstr_fd(error, 1);

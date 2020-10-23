@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/22 18:37:19 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/23 12:01:39 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 	yy = info->sprite_struct_all->y;
 	t_point begin, end, test_begin;
 
-	//player ray
 	t_eq_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
 
-	//sprite center player 
 
 	t_eq_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
 
-	// sprite center equation
 	t_eq_line sprite_center;
 	if (player_sprite_center.m != 0)
 	{
@@ -64,53 +61,30 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 	}
 	xv = entersection_two_line(sprite_center, player_sprite, info).x;
 	yv = entersection_two_line(sprite_center, player_sprite, info).y;
-	//printf("casting ray is  %f +  %f  \n", xv, yv);
-
-
-	test_begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
-
-
-
-	// player view ray
+	begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
 	t_eq_line player_view;
-
-	begin.x = test_begin.x;
-	begin.y = test_begin.y;
-	tst_x = destance_2_points(begin.x, begin.y, xv, yv);
-
-	//printf("center   is  %f +  %f\n", xs, ys);
-	//printf("casting  is  %f +  %f\n", xv, yv);
-	//printf("test : %f\n", tst_x);
-
-	//x_offsite = (info->size / 2) - destance_2_points(info->sprite_struct_all->x_center, info->sprite_struct_all->y_center, cos((info->angle) * R_P) * destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center , info->sprite_struct_all->y_center) + info->xp, sin((info->angle) * R_P) *  destance_2_points(info->xp, info->yp, info->sprite_struct_all->x_center, info->sprite_struct_all->y_center) + info->yp);
-	x_offsite = tst_x;
-	
+	x_offsite = destance_2_points(begin.x, begin.y, xv, yv);
+	if ((int)info->old_debug  == -1)
+		info->old_debug = x_offsite;	
 	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
 	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
 	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
-
-	int gx, gy;
-
-	gx = (x_offsite / info->size)  *  info->sprite_w;
-	gy = (z_sprite  / info->projection_sprite) * info->sprite_h;
-	get = gy * info->sprite_w + gx;
-		if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
-		{	
-			//printf("all dest is %f\n", destance_2_points(begin.x, begin.y, end.x, end.y));
-			printf("player  is  %f,  %f center  %f, %f begin %f, %f check view %f, %f \n", xp, yp, xs, ys, begin.x, begin.y, xv, yv);
-			//printf("sprite center  is  %f  %f %d\n", sprite_center.m, sprite_center.b, sprite_center.is_perpendicular);
-
-			if (x_offsite > 0.0 && x_offsite < info->size)
+	if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
+	{	
+		if ((int)info->old_debug != (int)x_offsite)
 			{
-				if (info->data_sprite[get] > 0x000000 )
-				{
-					info->data_3d[index] =info->data_sprite[get];	
-				}
-				return(x_offsite);
-			}			
-		}
+				info->old_debug = x_offsite;
+			}
+		if (x_offsite > 0.0 && x_offsite < info->size)
+		{
+			if (info->data_sprite[get] > 0x000000 )
+			{
+				info->data_3d[index] =info->data_sprite[get];	
+			}
+			return(x_offsite);
+		}		
+	}
 		return (x_offsite);
-
 }
 
 int get_sprite_from_file(t_all_info *info)

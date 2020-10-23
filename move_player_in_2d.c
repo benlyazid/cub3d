@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/23 17:55:30 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,22 @@ int			effect_move(int key, t_all_info *info)
 	double xp;
 	double yp;
 	double angle;
-	
-	if (key ==53 || key == 2 || key == 0 || key == 13 || key == 1)
+	if (key ==53 || key == 2 || key == 0 || key == 13 || key == 1 || key == 124 || key == 123)
 	{
-		//printf("key is : %d\n", key);
 		angle = info->angle;
 		if (key == 53)
 			exit(1);
-		if (key == 2)
-			//info->angle += (60/ info->width) * 50;
-			info->angle += 30;
-		if (key == 0)
-			//info->angle -=  (60/ info->width) * 50;
-			info->angle -=  30;
+		if (key == 124)
+			info->angle += 10;
+		if (key == 123)
+			info->angle -= 10;
+		
+		
 		xp = info->xp;
 		yp = info->yp;
 
-		//// i just add this lina of the angle
-		if (info->angle == 390)
-			info->angle = (int)info->angle % 360;
+		if (info->angle == 370)
+			info->angle = 10;
 		if (info->angle == 0)
 			info->angle = 360 ;
 		effect_key_for_move(info, key);
@@ -88,6 +85,18 @@ int		effect_key_for_move(t_all_info *info, int key)
 	{
 		info->xp -= ((info->size / 5) * cos(info->angle * M_PI / 180));
 		info->yp -= ((info->size / 5) * sin(info->angle * M_PI / 180)); 
+	}
+	
+	
+	if (key == 0) // a
+	{
+			info->xp -= ((info->size / 5) * cos((info->angle + 90) * M_PI / 180));
+			info->yp -= ((info->size / 5) * sin((info->angle + 90) * M_PI / 180));
+	}
+	if (key == 2) //d
+	{
+			info->xp += ((info->size / 5) * cos((info->angle + 90) * M_PI / 180));
+			info->yp += ((info->size / 5) * sin((info->angle + 90) * M_PI / 180));
 	}
 	
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/23 17:15:34 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,14 @@ int		draw_3d_image(t_all_info *info, double x, double alpha)
 	while (z < (int)end)
 	{
 
-		index = (z * (int)info->width) + (int)x; 
+		index = (z * info->width) + (int)x; 
 		if (index >= 0 && index < (int)info->height * (int)info->width)
 		{
 			info->projection_wall = projection_wall;
 			info->data_3d[index] = get_texteur_value(info, c, wall_dest.type);
-
 		}
-
 		c++;
 		z++;
-		
 	 }
 		
 	z = end;
@@ -150,11 +147,6 @@ t_d_wall	calc_destance_to_wall(t_all_info *info)
 	xpoint = ray_casting_x(info);
 
 	
-	/*while(info->tst > 0)
-	{
-		//printf("leaks test0\n");
-	}*/
-	
 	ypoint = ray_casting_y(info);
 
 
@@ -213,7 +205,7 @@ int				draw_all_image_3d(t_all_info *info)
 		alpha+= (60 / info->width);
 		x+= 1;
 	}
-	printf("finish\n\n\n\n");
+	info->old_debug = -1;
 	 info->angle = save_angle;
 	return (0);
 }

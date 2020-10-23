@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/23 09:48:35 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ t_point	ray_casting_x(t_all_info *info)
 					info->sprite_struct_all->x_center = sprite_center_x;
 					info->sprite_struct_all->y_center =  sprite_center_y;
 					info->sprite_struct_all->visible = 'x';
-					info->sprite_struct_all->x = x - moins;
+					//info->sprite_struct_all->x = x - moins;
+					info->sprite_struct_all->x = x;
 					info->sprite_struct_all->y = y;
 					info->sprite_struct_all->dest = destance_2_points(info->xp, info->yp, x - moins, y);
 					info->sprite_struct_all->next = NULL;
@@ -196,7 +197,8 @@ t_point	ray_casting_x(t_all_info *info)
 					sprite_data->x_center = sprite_center_x;
 					sprite_data->y_center =  sprite_center_y;	
 					sprite_data->visible = 'x';
-					sprite_data->x = x - moins;
+					//sprite_data->x = x - moins;
+					sprite_data->x = x;
 					sprite_data->y = y;
 					sprite_data->dest = destance_2_points(info->xp, info->yp, x - moins, y);
 					sprite_data->next = NULL;		
@@ -288,7 +290,8 @@ t_point	ray_casting_y(t_all_info *info)
 					info->sprite_struct_all->y_center = sprite_center_y;
 					info->sprite_struct_all->visible = 'y';
 					info->sprite_struct_all->x = x;
-					info->sprite_struct_all->y = y - moins;
+					//info->sprite_struct_all->y = y - moins;
+					info->sprite_struct_all->y = y;
 					info->sprite_struct_all->next = NULL;
 					info->sprite_struct_all->dest = destance_2_points(info->xp, info->yp, x, y - moins);
 					
@@ -301,7 +304,8 @@ t_point	ray_casting_y(t_all_info *info)
 					sprite_data->y_center = sprite_center_y;
 					sprite_data->visible = 'y';
 					sprite_data->x = x;
-					sprite_data->y = y - moins;
+					sprite_data->y = y;
+					//sprite_data->y = y - moins;
 					sprite_data->dest = destance_2_points(info->xp, info->yp, x, y - moins);
 					sprite_data->next = NULL;	
 					add_to_last(info->sprite_struct_all, sprite_data);	

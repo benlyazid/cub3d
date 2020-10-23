@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/22 18:21:06 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/23 09:18:48 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef	struct	s_sprite
 typedef	struct	s_all_info
 {
 	t_color		color_coll;
+	double		old_debug;
 	t_color		color_flor;
 	char		*maps;
 	char		*file;
