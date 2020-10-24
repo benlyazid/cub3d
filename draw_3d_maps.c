@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/23 17:15:34 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 18:26:02 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int				draw_all_image_3d(t_all_info *info)
 	alpha = -30;
 	x = 0;
 
-	
+	info->test = 0;
 	while (x < info->width)
 	{
 		info->tst = x;
@@ -205,6 +205,7 @@ int				draw_all_image_3d(t_all_info *info)
 		alpha+= (60 / info->width);
 		x+= 1;
 	}
+	printf("finish\n\n");
 	info->old_debug = -1;
 	 info->angle = save_angle;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 11:33:13 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 12:51:07 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 18:35:13 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int		main(int argc, char *argv[])
 		{
 			save_bmp(info);
 			free(info->mp);
+			free(info->maps);
+			free(info->file);
 			free(info);
 			leakcheckfull();
 			

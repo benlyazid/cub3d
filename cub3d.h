@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 11:38:54 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 18:33:43 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <mlx.h>
 # include <math.h>
 
-
 typedef struct	s_desst_to_wall
 {
 	double	destance;
@@ -30,7 +29,6 @@ typedef struct	s_desst_to_wall
 	double	x_wall;
 	double	y_wall;
 	int		sprite;
-
 }				t_d_wall;
 
 typedef	struct	s_color
@@ -54,8 +52,18 @@ typedef	struct	s_sprite
 
 }				t_sprite;
 
+
+
+typedef struct	s_point
+{
+	double		x;
+	double		y;
+}				t_point;
+
 typedef	struct	s_all_info
 {
+	t_point				old_point;
+	int					test;
 	int					file_save;
 	unsigned	char	*header;
 	char				*buf;
@@ -127,12 +135,6 @@ typedef	struct	s_all_info
 	int					g;
 	int					b;
 }				t_all_info;
-
-typedef struct	s_point
-{
-	double		x;
-	double		y;
-}				t_point;
 
 typedef struct	s_equation_of_line
 {

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/23 12:01:39 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 18:25:35 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 	}
 	xv = entersection_two_line(sprite_center, player_sprite, info).x;
 	yv = entersection_two_line(sprite_center, player_sprite, info).y;
-	begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
+	if (player_sprite.m == 0)
+	{		
+		xv = info->old_point.x;
+		yv = info->old_point.y;
+	}	
+begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
 	t_eq_line player_view;
 	x_offsite = destance_2_points(begin.x, begin.y, xv, yv);
 	if ((int)info->old_debug  == -1)
@@ -69,12 +74,23 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
 	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
 	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
+	if ((int)info->old_debug != (int)x_offsite)
+	{
+		//printf("XOFFSITE %f, view %f %f  PLAYER %f, %f  Sprite %f %f : Xis %f \n", x_offsite, xv, yv, xp, yp, xs, ys, info->sprite_struct_all->x);
+
+		info->old_debug = x_offsite;
+	}
 	if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
 	{	
-		if ((int)info->old_debug != (int)x_offsite)
-			{
-				info->old_debug = x_offsite;
-			}
+		info->test =  1;
+		info->old_point.x = xv;
+		info->old_point.y = yv;
+		// if ((int)info->old_debug != (int)x_offsite)
+		// 	{
+		// 		printf("XOFFSITE %f, view %f %f  PLAYER %f, %f  Sprite %f %f :player_is %d spr_is%d \n", x_offsite, xv, yv, xp, yp, xs, ys, player_sprite.is_perpendicular, sprite_center.is_perpendicular);
+
+		// 		info->old_debug = x_offsite;
+		// 	}
 		if (x_offsite > 0.0 && x_offsite < info->size)
 		{
 			if (info->data_sprite[get] > 0x000000 )
@@ -84,6 +100,8 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 			return(x_offsite);
 		}		
 	}
+
+
 		return (x_offsite);
 }
 
