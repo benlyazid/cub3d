@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 19:45:56 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 11:24:48 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_sprite    *add_to_last (t_sprite *sprite_list, t_sprite *sprite)
 {
     while (sprite_list->next)
        sprite_list = (sprite_list->next);
-    //sprite_list->next = malloc(sizeof(t_sprite));
     sprite_list->next = sprite;
-    //free(sprite);
     return (0);
 }
 
@@ -31,7 +29,6 @@ int sort_by_destance(t_all_info *info)
   t_sprite *sprite_save, *sprite_change;
 
     sprite_change = (t_sprite*)malloc (sizeof(t_sprite));
-    //sprite_save = (t_sprite*)malloc (sizeof(t_sprite));
 
     sprite_save = info->sprite_struct_start;
     

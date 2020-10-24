@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:31:19 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/19 09:34:56 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 11:34:58 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int				*get_mp(t_all_info *info)
 	return (0);
 }
 
-
-char			*get_maps(char *file)
+char	*get_maps(char *file)
 {
 	int 	i;
 	char	*maps;
@@ -50,7 +49,7 @@ char			*get_maps(char *file)
 	{
 		if (file[i] == '\n')
 			if (file[i + 1] == '1')
-					return (ft_strdup(file + i + 1));
+				return (ft_strdup(file + i + 1));
 		i++;
 	}
 
@@ -89,9 +88,30 @@ char	*join(char  *s1, char  *s2)
 	return (ret);
 }
 
+int		check_file_if_is_dot_cub(char *name)
+{
+	int i;
+	int l;
 
+	l = ft_strlen(name);
+	i = l - 1;
+	if (l < 3 )
+		return (-1);
+	
+	if (name[i] != 'b')
+		return (-1);
+	
+	if (name[i - 1] != 'u')
+		return (-1);
+	if (name[i - 2] != 'c')
+		return (-1);		
+	if (name[i - 3] != '.')
+		return (-1);
 
-char		*read_file(int fd)
+	return (1);
+}
+
+char	*read_file(int fd)
 {
 	char	*file;
 	char	*get;
@@ -117,46 +137,29 @@ char		*read_file(int fd)
 	
 }
 
-/*
-char			*read_file(int fd)
-{
-	char	*file;
-	char	*get;
-	char	*rest;
-	file = NULL;
-	get = malloc(sizeof(char) + 1);
-	file = NULL;
-	while (read(fd, get, 1))
-	{
-		get[1] = '\0';
-		if (!file)
-			file = ft_strdup(get);
-		else
-			{
-				file = ft_strjoin(file, get);	
-			}	
-	}
-	free(get);
-	close(fd);
-	return (file);
-}
-*/
 
-int				get_width(char *file)
+int		get_width(char *file)
 {
 	int result;
 	int i;
-
+	int	j;
 	result = 0;
 	i = 0;
+	j = 0;
 	while (file[i])
 	{
 		if (file[i] == 'R' && (i == 0 || file[i - 1] == '\n'))
 		{	i++;
 			while(file[i] == ' ')
 				i++;
-			if(ft_isdigit(file[i]))
+			while(ft_isdigit(file[i + j]))
+			{
+				j++;
+			}
+			if(ft_isdigit(file[i]) && j <= 9)
 				result = ft_atoi(file + i);
+			else if (ft_isdigit(file[i]) && j > 9)
+				result = 2560;
 			else
 				return 0;
 			if (result > 2560)
@@ -169,14 +172,15 @@ int				get_width(char *file)
 	return (result);
 }
 
-
-int				get_height(char *file)
+int		get_height(char *file)
 {
 	int i;
 	int result;
+	int	j;
 
 	i = 0;
 	result = 0;
+	j = 0;
 	while (file[i])
 	{
 		if (file[i] == 'R')
@@ -188,8 +192,14 @@ int				get_height(char *file)
 				i++;
 			while(file[i] == ' ')
 				i++;
-			if (ft_isdigit(file[i]))
+			while(ft_isdigit(file[i + j]))
+			{
+				j++;
+			}
+			if(ft_isdigit(file[i]) && j <= 9)
 				result = ft_atoi(file + i);
+			else if (ft_isdigit(file[i]) && j > 9)
+				result = 1440;
 			else
 				return 0;
 			if (result > 1440)
@@ -207,7 +217,6 @@ int				get_height(char *file)
 	return (result);
 }
 
-
 void	get_all_info(char* arg, t_all_info *info)
 {
 	info->width = get_width(info->file);
@@ -219,20 +228,8 @@ void	get_all_info(char* arg, t_all_info *info)
 	get_color_coll(info);
 	info->color_flor.value = 65536 * info->color_flor.r + 256 * info->color_flor.g + info->color_flor.b;
 	info->color_coll.value = 65536 * info->color_coll.r + 256 * info->color_coll.g + info->color_coll.b;
-	//free(info->file);
 }
 
-
-int		get_data_from_maps(int	x, int	y, t_all_info *info)
-{
-	int index_x;
-	int	index_y;
-	int index ;
-	index_x = ((int)x) * (int)info->width_number / (int)info->width;
-	index_y = (int)y * (int)info->height_number / (int)info->height;	
-	index = (index_y * (int)info->width_number  + index_x);
-	return(info->mp[index]);
-}
 
 
 int get_color_flor(t_all_info *info)
@@ -361,24 +358,6 @@ int get_max_h(char *maps)
 }
 
 
-int		get_line_end(char *maps, int line)
-{
-	int res;
-	int y;
-
-	res = 0;
-	y = 0;
-	while (maps[res] && y <= line)
-	{
-		if (maps[res] == '\n')
-			y++;
-		res++;
-		
-	}
-	return res;
-}
-
-
 char *repiare_the_maps(char *maps)
 {
 	int i;
@@ -387,7 +366,7 @@ char *repiare_the_maps(char *maps)
 	char	*tst;
 
 	i = 0;
-	w = get_max_w(maps) + 1; //this 1 is for \n
+	w = get_max_w(maps) + 1;
 	h = get_max_h(maps);
 	tst = malloc(sizeof(char) * (w) * h );
 	int last = 0;
@@ -440,6 +419,7 @@ int get_the_begin_of_the_map(char *file)
 	{
 		if ((file[i] == '1' || file[i] == ' ') && file[i - 1] == '\n')
 		{
+			return (i);
 			result = i;
 			while (file[i] != '\n')
 				i++;
@@ -463,7 +443,6 @@ int is_player(char c)
 
 int check_border(char *maps, t_all_info *info)
 {
-	//Check for * and - in the bigen
 	int i = 0;
 	int j  = 0;
 	while (maps[i])
@@ -472,7 +451,6 @@ int check_border(char *maps, t_all_info *info)
 			j++;
 		if (maps[i] == '0' && j == 0)
 			return -10;
-		//if (maps[i] == '\n' && maps[i + 1] && maps[i + 1] != '1')
 		if (maps[i] == '\n' && maps[i + 1] && (maps[i + 1] == '0' || is_player(maps[i + 1])|| maps[i + 1] == '2'))
 			return -200;
 		if (maps[i] == '\n' && maps[i - 1] && (maps[i - 1] == '0' || is_player(maps[i - 1]) || maps[i - 1] == '2'))
@@ -496,6 +474,15 @@ int not_supported(char c)
 	
 }
 
+int file_not_supported(char c)
+{
+	if (c == 'W' || c == 'N' || c == 'E' || c == 'S' || c == '\n')
+		return 1;
+	if (c == '1' || c == '0' || c == '2' || c == ' ')
+		return 1;
+	return -1;
+	
+}
 
 int check_arrownd(char *maps, t_all_info *info)
 {
@@ -587,7 +574,6 @@ int check_the_maps(t_all_info *info)
 		return -1;
 	return 0;
 }
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/23 17:55:30 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 11:33:16 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int			effect_move(int key, t_all_info *info)
 	{
 		angle = info->angle;
 		if (key == 53)
-			exit(1);
+			{
+				free(info->mp);
+				free(info);
+				leakcheckfull();
+				exit(1);
+			}
 		if (key == 124)
 			info->angle += 10;
 		if (key == 123)

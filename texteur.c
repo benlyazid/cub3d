@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:31:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/23 16:48:28 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 10:53:24 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ int	get_x_value(t_all_info *info, double img_size_w, double img_size_h, int *dat
 	double	y0;
 	int		index_0;
 
-	//x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
-	//y0 = info->z * img_size_h / info->projection_wall;
-	//index_0 = ((int)y0 * (int)img_size_w) + (int)x0;	
-	
 	x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
 	y0 = info->z * img_size_h / info->projection_wall;
 	index_0 = ((int)y0 * img_size_w) + (int)x0;

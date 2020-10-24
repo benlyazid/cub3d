@@ -1,34 +1,42 @@
 #include "cub3d.h"
 
-void set_error(int type_of_error)
+void set_error(int er, t_all_info *info)
 {
 
 	//norm
 	//makefile
-	//correct the key
-	// if resolution in big than int 
-	//sprite
-	//shec file is .cub
-	//correct texteur view
-	//free all in the end
-// line with all spaces is not valide
+	// correct texteur image
+	// remove inusid function and files
+	// correct steps
+	// correct draw line;
+
 	char *error = ft_strdup("error\n");
 	ft_putstr_fd(error, 1);
 	free(error);
-	if (type_of_error == 0)
+	if (er == 70)
 		error = ft_strdup("Error in Resolution");
-	else if (type_of_error == 1)
-		ft_putstr_fd("Error in texteur path", 1);
-	else if (type_of_error == 2)
+	else if (er == 60)
+		error = ft_strdup("Error in texteur path");
+	else if (er == 50)
 		error = ft_strdup("Error in sprite path");
-	else if (type_of_error == 3)
+	else if (er == 40)
 		error = ft_strdup("Error in color format");
-	else if (type_of_error == 4)
+	else if (er == 80)
 		error = ft_strdup("Error in the maps");
-	else if (type_of_error == 5)
+	else if (er == 100)
 		error = ft_strdup("Error in the file");
-	else // if (type_of_error == 6)
+	else if (er == 90)
 		error = ft_strdup("Error in the file data");
+	else if (er == 30)
+		error = ft_strdup("arg not supported");
+	if (er <= 80)
+		free(info->maps);
+	if (er <= 70)
+		free(info->mp);
+	if (er <= 90)
+		free(info->file);
+	free(info);
 	ft_putstr_fd(error, 1);
-	//free(error);
+	free(error);
+	leakcheckfull();
 }
