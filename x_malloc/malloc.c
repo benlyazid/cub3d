@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaadi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 21:15:17 by isaadi            #+#    #+#             */
-/*   Updated: 2019/12/22 15:56:34 by isaadi           ###   ########.fr       */
+/*   Updated: 2020/10/24 19:30:51 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <execinfo.h>
 #define N leakcheck
-#define F leakcheckfull
+#define F //leakcheckfull
 #define R _Nan
 
 typedef struct	s_blk
@@ -209,7 +209,7 @@ void	leakcheck()
 	}
 }
 
-void	leakcheckfull()
+void	//leakcheckfull()
 {
 	t_blk	*tmp;
 	size_t	x, j, k;

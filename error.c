@@ -5,11 +5,8 @@ void set_error(int er, t_all_info *info)
 
 	//norm
 	//makefile
-	// correct texteur image
 	// remove inusid function and files
 	// correct steps
-	// correct draw line;
-
 	char *error = ft_strdup("error\n");
 	ft_putstr_fd(error, 1);
 	free(error);
@@ -38,5 +35,4 @@ void set_error(int er, t_all_info *info)
 	free(info);
 	ft_putstr_fd(error, 1);
 	free(error);
-	leakcheckfull();
 }

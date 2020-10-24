@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 18:33:43 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 19:55:19 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include "./libft/libft.h"
-# include "./x_malloc/malloc.h"
 # include <mlx.h>
 # include <math.h>
 
@@ -52,8 +51,6 @@ typedef	struct	s_sprite
 
 }				t_sprite;
 
-
-
 typedef struct	s_point
 {
 	double		x;
@@ -62,6 +59,13 @@ typedef struct	s_point
 
 typedef	struct	s_all_info
 {
+	double				x1;
+	double				y1;
+	double				x2;
+	double				y2;
+	double				aa;
+	double				bb;
+	double				cc;
 	t_point				old_point;
 	int					test;
 	int					file_save;
@@ -185,8 +189,8 @@ double			destance_2_points(double x1, double y1, double x2, double y2);
 t_eq_line		find_equation_of_line(double x1, double y1,
 				double x2, double y2);
 t_point			entersection_two_line(t_eq_line a, t_eq_line b, t_all_info *i);
-t_point			enter_line_circle(t_all_info *i, double x, double y,
-double r, t_eq_line l);
+t_point			entr_ln_cr(t_all_info *i, double x, double y,
+				t_eq_line l);
 int				draw_sprite(t_all_info *info);
 t_sprite		*add_to_last (t_sprite *sprite, t_sprite *sprite_data);
 int				sort_by_destance(t_all_info *info);

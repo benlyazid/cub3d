@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 18:25:35 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/24 19:55:19 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 		xv = info->old_point.x;
 		yv = info->old_point.y;
 	}	
-begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
+	begin = entr_ln_cr(info, xs, ys, sprite_center);
 	t_eq_line player_view;
 	x_offsite = destance_2_points(begin.x, begin.y, xv, yv);
 	if ((int)info->old_debug  == -1)
