@@ -3,7 +3,7 @@ NO /Users/kbenlyaz/Desktop/wall0.xpm
 SO /Users/kbenlyaz/Desktop/wall2.xpm
 WE /Users/kbenlyaz/Desktop/wall3.xpm
 EA /Users/kbenlyaz/Desktop/wall4.xpm
-S /Users/kbenlyaz/Desktop/ninja.xpm
+S /Users/kbenlyaz/Desktop/barrel.xpm
 F 148,112,214
 C 255,102,102
 
@@ -14,7 +14,7 @@ C 255,102,102
 11111000100001000001
      11111111111111111
         1000000011
-        10002000001     11111
+        10002000001     111111
         11111111000111111120011
         11111111000000000000011111111 
                 111111100000000000000111111         

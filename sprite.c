@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 19:55:19 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/25 17:34:21 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	get_sprite_value(t_all_info *info, double z_sprite,  int index, int  type, d
 	if ((int)info->old_debug  == -1)
 		info->old_debug = x_offsite;	
 	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
-	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
+	get_y_f = (z_sprite  / info->prjct_sprt) * info->sprite_h;
 	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
 	if ((int)info->old_debug != (int)x_offsite)
 	{

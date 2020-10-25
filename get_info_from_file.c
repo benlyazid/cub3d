@@ -6,33 +6,34 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:31:19 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 11:34:58 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/25 20:14:19 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 int				*get_mp(t_all_info *info)
 {
 	int	*mp;
 	int	i;
 	int	j;
-	int  number_of_new_line = get_max_h(info->maps);
-	info->mp = (int*)malloc(sizeof(int) *  (ft_strlen(info->maps) - number_of_new_line + 1));
+	int number_of_new_line;
+
+	number_of_new_line = get_max_h(info->maps);
+	info->mp = (int*) malloc(sizeof(int) * (ft_strlen(info->maps) - number_of_new_line + 1));
 	i = 0;
 	j = 0;
-
 	while (info->maps[i])
 	{
 		if (info->maps[i] == '1')
 			info->mp[j] = 1;
 		if (info->maps[i] == '2')
 			info->mp[j] = 2;
-		if (info->maps[i] == '0' || info->maps[i] == 'S' || info->maps[i] == 'N' || info->maps[i] == 'E' || info->maps[i] == 'W')
+		if (info->maps[i] == '0' || info->maps[i] == 'S' || info->maps[i] == 'N' ||
+		info->maps[i] == 'E' || info->maps[i] == 'W')
 			info->mp[j] = 0;
 		if (info->maps[i] != ' ' && info->maps[i] != '\n')
-				j++;
+			j++;
 		i++;
 	}
 	return (0);

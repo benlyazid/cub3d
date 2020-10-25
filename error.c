@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/25 18:34:17 by kbenlyaz          #+#    #+#             */
+/*   Updated: 2020/10/25 18:34:18 by kbenlyaz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void set_error(int er, t_all_info *info)
 {
 
 	//norm
+	// check 00000 in the bigen of the resolution
 	//makefile
 	// remove inusid function and files
 	// correct steps

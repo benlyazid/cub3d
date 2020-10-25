@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 19:55:19 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/25 20:39:23 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,18 @@ typedef struct	s_point
 
 typedef	struct	s_all_info
 {
+	int					ur;
+	int					ug;
+	int					ub;
+	int					uc;
+	int					start;
+	int					end;
+	int					sprit_start;
+	int					sprit_end;
+	int					z_sprt;
+	t_d_wall			wll_dst;
+	double				dst_ply_prj;
+	double				dst_to_wall;
 	double				x1;
 	double				y1;
 	double				x2;
@@ -72,7 +84,7 @@ typedef	struct	s_all_info
 	unsigned	char	*header;
 	char				*buf;
 	uint16_t			bitcount;
-	int					width_in_bytes;
+	int					w_bt;
 	uint32_t			imagesize;
 	uint32_t			bisize;
 	uint32_t			bfoffbits;
@@ -126,18 +138,19 @@ typedef	struct	s_all_info
 	double				sprite_h;
 	double				sprite_w;
 	int					sprite;
-	double				projection_sprite;
+	double				prjct_sprt;
 	double				save_angle;
 	double				projection_wall;
 	t_sprite			*sprite_struct_all;
 	t_sprite			*sprite_struct_start;
 	double				size;
 	int					tst;
-	int					z;
+	int					z_texteur;
 	int					color;
 	int					r;
 	int					g;
 	int					b;
+	double				dst;
 }				t_all_info;
 
 typedef struct	s_equation_of_line
@@ -191,10 +204,8 @@ t_eq_line		find_equation_of_line(double x1, double y1,
 t_point			entersection_two_line(t_eq_line a, t_eq_line b, t_all_info *i);
 t_point			entr_ln_cr(t_all_info *i, double x, double y,
 				t_eq_line l);
-int				draw_sprite(t_all_info *info);
 t_sprite		*add_to_last (t_sprite *sprite, t_sprite *sprite_data);
 int				sort_by_destance(t_all_info *info);
-int				draw_sprite(t_all_info *info);
 int				get_type_from_maps(double x, double y, t_all_info *info);
 int				get_player_info(t_all_info *info);
 int				get_sprite_from_file(t_all_info *info);
