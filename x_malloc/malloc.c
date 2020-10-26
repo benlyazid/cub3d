@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 21:15:17 by isaadi            #+#    #+#             */
-/*   Updated: 2020/10/24 19:30:51 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:05:32 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	leakcheck()
 	}
 }
 
-void	//leakcheckfull()
+void	leakcheckfull()
 {
 	t_blk	*tmp;
 	size_t	x, j, k;

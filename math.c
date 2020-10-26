@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 20:10:27 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 09:29:56 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ t_point		entersection_two_line(t_eq_line eq1, t_eq_line eq2, t_all_info *ifo)
 	point.y = (point.x * eq1.m) + eq1.b;
 	if (eq1.is_perpendicular)
 	{
-		if (ifo->sprite_struct_all->x_center != ifo->xp)
+		if (ifo->all_sprt->xc != ifo->xp)
 		{
-			point.x = ifo->sprite_struct_all->x_center;
+			point.x = ifo->all_sprt->xc;
 			point.y = (point.x * eq2.m) + eq2.b;
 		}
 		else
 		{
-			point.y = ifo->sprite_struct_all->y_center;
+			point.y = ifo->all_sprt->yc;
 			point.x = (point.y - eq2.b) / eq2.m;
 		}
 	}

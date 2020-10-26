@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 18:23:54 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:59:46 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int			initial_value_for_3d(t_all_info *info, double alpha)
 {
-	info->sprite_struct_all = malloc(sizeof(t_sprite));
-	info->sprite_struct_start = info->sprite_struct_all;
+	info->all_sprt = malloc(sizeof(t_sprite));
+	info->sprite_struct_start = info->all_sprt;
 	info->wll_dst = calc_destance_to_wall(info);
 	info->x_wall = info->wll_dst.x_wall;
 	info->y_wall = info->wll_dst.y_wall;
@@ -39,7 +39,6 @@ int			initial_value_for_3d(t_all_info *info, double alpha)
 int			draw_wall_flor_sol(t_all_info *info, double x, int z, int c)
 {
 	int	i;
-
 	while (z++ < info->start)
 	{
 		i = ((z * (int)info->width) + (int)x);
@@ -70,10 +69,10 @@ int			draw_sprite(t_all_info *info, int x)
 	t_sprite	*save;
 	int			i;
 
-	while (info->sprite == 1 && info->sprite_struct_all)
+	while (info->sprite == 1 && info->all_sprt)
 	{
 		info->dst = destance_2_points(info->xp, info->yp,
-		info->sprite_struct_all->x_center, info->sprite_struct_all->y_center);
+		info->all_sprt->xc, info->all_sprt->yc);
 		info->prjct_sprt = info->dst_ply_prj * info->size / info->dst;
 		info->sprit_start = ((int)info->height - (int)info->prjct_sprt) / 2;
 		info->sprit_end = (((int)info->height + (int)info->prjct_sprt) / 2);
@@ -82,14 +81,14 @@ int			draw_sprite(t_all_info *info, int x)
 		{
 			i = ((int)info->z_sprt * (int)info->width) + (int)x;
 			if (i >= 0 && i < (int)info->height * (int)info->width)
-				if (info->wll_dst.destance > info->sprite_struct_all->dest)
+				if (info->wll_dst.destance > info->all_sprt->dest)
 					get_sprite_value(info, (info->z_sprt - info->sprit_start),
-					i, info->wll_dst.type, x);
+					i, x);
 			info->z_sprt += 1;
 		}
-		save = info->sprite_struct_all->next;
-		free(info->sprite_struct_all);
-		info->sprite_struct_all = save;
+		save = info->all_sprt->next;
+		free(info->all_sprt);
+		info->all_sprt = save;
 	}
 	return (0);
 }
@@ -101,7 +100,7 @@ int			draw_3d_image(t_all_info *info, double x, double alpha)
 	if (info->sprite == 1)
 	{
 		sort_by_destance(info);
-		info->sprite_struct_all = info->sprite_struct_start;
+		info->all_sprt = info->sprite_struct_start;
 	}
 	draw_sprite(info, x);
 	if (info->sprite == 0)

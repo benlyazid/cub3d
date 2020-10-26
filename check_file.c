@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:24:02 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 16:27:48 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:59:12 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_line_to_end(char *file, int i)
 	if (file[i + j] == ' ')
 		while (file[i + j] && file[i + j] != '\n')
 		{
-			if (file_not_supported(file[i + j]) == -1)
+			if (file_suport(file[i + j]) == -1)
 				return (0);
 			if (file[i + j] == '1')
 				wall_number++;

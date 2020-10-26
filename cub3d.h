@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 20:39:23 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:17:48 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "./libft/libft.h"
 # include <mlx.h>
 # include <math.h>
-
 typedef struct	s_desst_to_wall
 {
 	double	destance;
@@ -43,8 +42,8 @@ typedef	struct	s_sprite
 {
 	double			x;
 	double			y;
-	double			x_center;
-	double			y_center;
+	double			xc;
+	double			yc;
 	double			dest;
 	int				visible;
 	struct s_sprite	*next;
@@ -59,6 +58,12 @@ typedef struct	s_point
 
 typedef	struct	s_all_info
 {
+	int					bits;
+	int					line;
+	int					cast_type;
+	double				xa;
+	double				ya;
+	t_point				view;
 	int					ur;
 	int					ug;
 	int					ub;
@@ -141,7 +146,7 @@ typedef	struct	s_all_info
 	double				prjct_sprt;
 	double				save_angle;
 	double				projection_wall;
-	t_sprite			*sprite_struct_all;
+	t_sprite			*all_sprt;
 	t_sprite			*sprite_struct_start;
 	double				size;
 	int					tst;
@@ -195,8 +200,8 @@ t_point			ray_casting_x_mini(t_all_info *info);
 int				draw_image_view_angle_mini(t_all_info *info);
 void			draw_line_mini(t_all_info *info, int x1, int y1, int color);
 int				get_texteur_value(t_all_info *info, int	z, int type);
-int				get_sprite_value(t_all_info *d, double z,
-				int i, int t, double x);
+int				get_sprite_value(t_all_info *f, double z,
+				int i, double x);
 int				rm_all(t_all_info *info);
 double			destance_2_points(double x1, double y1, double x2, double y2);
 t_eq_line		find_equation_of_line(double x1, double y1,
@@ -225,13 +230,28 @@ char			*get_no_texteur_path(t_all_info *info);
 char			*get_so_texteur_path(t_all_info *info);
 char			*get_we_texteur_path(t_all_info *info);
 char			*get_ea_texteur_path(t_all_info *info);
-int				get_x_value(t_all_info *info, double img_size_w, double
-img_size_h, int *data);
-int				get_y_value(t_all_info *info, double img_size_w, double
-img_size_h, int *data);
+int				get_x_value(t_all_info *info, double img_w, double
+				img_size_h, int *data);
+int				get_y_value(t_all_info *info, double img_w, double
+				img_size_h, int *data);
 int				check_file_if_is_dot_cub(char *name);
-int				file_not_supported(char c);
+int				file_suport(char c);
 int				save_bmp(t_all_info *info);
 int				check_argv(char *str);
+char			*get_sprite_path(t_all_info *info);
+int				add_sprit_allocate_x(t_all_info *info, int moins,
+				double x, double y);
+int				insert_sprit_x(t_all_info *info, int moins, double x, double y);
+t_point			execute_casting_x(t_all_info *info, int m, double x, double y);
+int				insert_sprit_y(t_all_info *info, int moins, double x, double y);
+int				add_sprit_allocate_y(t_all_info *info, int moins, double x,
+				double y);
+t_point			execute_casting_y(t_all_info *info, int moins, double x,
+				double y);
+int				is_player(char c);
+int				suport(char c);
+int				check_border(char *maps, t_all_info *info);
+int				get_the_begin_of_the_map(char *file);
+char			*repiare_the_maps(char *maps);
 
 #endif

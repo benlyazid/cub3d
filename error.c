@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 18:34:17 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 18:34:18 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 13:05:49 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void set_error(int er, t_all_info *info)
 {
-
+	//check free
 	//norm
 	// check 00000 in the bigen of the resolution
 	//makefile

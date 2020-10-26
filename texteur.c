@@ -6,45 +6,42 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:31:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 16:43:38 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 18:37:39 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_x_value(t_all_info *info, double img_size_w, double img_size_h, int *data)
+int	get_x_value(t_all_info *info, double img_w, double img_size_h, int *data)
 {
 	double	x0;
 	double	y0;
 	int		index_0;
-
-	x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
+//offset = (y * line_length + x * (bits_per_pixel / 8));
+	x0 = (info->x_wall % (int)info->size) * img_w / info->size;
 	y0 = info->z_texteur * img_size_h / info->projection_wall;
-	index_0 = ((int)y0 * img_size_w) + (int)x0;
-	if (x0 >= 0 && x0 < img_size_w && y0 >= 0 && y0 < img_size_h)
+	index_0 = ((int)y0 * img_w) + (int)x0;
+	if (x0 >= 0 && x0 < img_w && y0 >= 0 && y0 < img_size_h)
 		return (data[index_0]);
 	return (0);
 }
 
-int	get_y_value(t_all_info *info, double img_size_w, double img_size_h, int *data)
+int	get_y_value(t_all_info *info, double img_w, double img_size_h, int *data)
 {
 	double	x0;
 	double	y0;
 	int		index_0;
 
-	x0 = (info->y_wall % (int)info->size) * img_size_w / info->size;
+	x0 = (info->y_wall % (int)info->size) * img_w / info->size;
 	y0 = info->z_texteur * img_size_h / info->projection_wall;
-	index_0 = ((int)y0 * img_size_w) + (int)x0;
-	if (x0 >= 0 && x0 < img_size_w && y0 >= 0 && y0 < img_size_h)
+	index_0 = ((int)y0 * img_w) + (int)x0;
+	if (x0 >= 0 && x0 < img_w && y0 >= 0 && y0 < img_size_h)
 		return (data[index_0]);
 	return (0);
 }
 
 int	get_texteur_value(t_all_info *info, int z, int type)
 {
-	double	x0;
-	double	y0;
-	int		index_0;
 	double	angle;
 
 	info->z_texteur = z;
