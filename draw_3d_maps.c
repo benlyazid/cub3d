@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 18:59:46 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:49:53 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			initial_value_for_3d(t_all_info *info, double alpha)
 int			draw_wall_flor_sol(t_all_info *info, double x, int z, int c)
 {
 	int	i;
+
 	while (z++ < info->start)
 	{
 		i = ((z * (int)info->width) + (int)x);
@@ -82,8 +83,7 @@ int			draw_sprite(t_all_info *info, int x)
 			i = ((int)info->z_sprt * (int)info->width) + (int)x;
 			if (i >= 0 && i < (int)info->height * (int)info->width)
 				if (info->wll_dst.destance > info->all_sprt->dest)
-					get_sprite_value(info, (info->z_sprt - info->sprit_start),
-					i, x);
+					get_sprite_value(info, info->z_sprt - info->sprit_start, i);
 			info->z_sprt += 1;
 		}
 		save = info->all_sprt->next;

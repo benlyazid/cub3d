@@ -6,13 +6,13 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 20:26:22 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:46:45 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	exit_funct(int key, t_all_info *info)
+int	exit_funct(t_all_info *info)
 {
 	free(info->mp);
 	free(info);

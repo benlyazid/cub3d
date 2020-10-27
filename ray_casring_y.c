@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 17:26:52 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 19:16:56 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:48:00 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int			add_sprit_allocate_y(t_all_info *info, int m, double x, double y)
 {
 	t_sprite	*sprite_data;
 
-	sprite_data = (t_sprite*)malloc(sizeof(t_sprite));
 	if (info->sprite != 0)
 	{
+		sprite_data = (t_sprite*)malloc(sizeof(t_sprite));
 		sprite_data->xc = (int)(((int)x) / (int)info->size);
 		sprite_data->xc *= (int)info->size;
 		sprite_data->xc += (int)(info->size / 2);
@@ -52,7 +52,6 @@ int			add_sprit_allocate_y(t_all_info *info, int m, double x, double y)
 		info->yp, x - m, y);
 		sprite_data->next = NULL;
 		add_to_last(info->all_sprt, sprite_data);
-		//free(sprite_data);
 	}
 	return (1);
 }
@@ -61,6 +60,8 @@ t_point		execute_casting_y(t_all_info *info, int moins, double x, double y)
 {
 	t_point	point;
 
+	point.x = 0;
+	point.y = 0;
 	if (get_type_from_maps(x, y - moins, info) == 1)
 	{
 		point.x = x;

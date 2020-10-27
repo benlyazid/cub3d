@@ -1,1 +1,0 @@
-gcc -o cube_3d -g  -I /usr/local/include/   *.c ./libft/*.a   -L  /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit  && ./cube_3d file.cub

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:31:19 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 17:03:25 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:56:59 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*read_file(int fd)
 	return (file);
 }
 
-void	get_all_info(char *arg, t_all_info *info)
+void	get_all_info(t_all_info *info)
 {
 	info->width = get_width(info->file);
 	info->height = get_height(info->file);

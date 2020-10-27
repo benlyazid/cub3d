@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:54:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 18:41:02 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:44:10 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	get_player_info(t_all_info *info)
 	int x;
 	int	y;
 	int i;
-	int index;
 
 	i = 0;
 	x = 0;

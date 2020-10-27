@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 09:29:56 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:50:24 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			set_sprite_color(t_all_info *info, double x_off, int i, double z)
 	return (0);
 }
 
-int			get_sprite_value(t_all_info *info, double z_sprite, int i, double x)
+int			get_sprite_value(t_all_info *info, double z_sprite, int i)
 {
 	double		x_offsite;
 	t_eq_line	sprite_center;

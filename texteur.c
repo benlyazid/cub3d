@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:31:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 18:37:39 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:30:53 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_x_value(t_all_info *info, double img_w, double img_size_h, int *data)
 	double	x0;
 	double	y0;
 	int		index_0;
-//offset = (y * line_length + x * (bits_per_pixel / 8));
+
 	x0 = (info->x_wall % (int)info->size) * img_w / info->size;
 	y0 = info->z_texteur * img_size_h / info->projection_wall;
 	index_0 = ((int)y0 * img_w) + (int)x0;

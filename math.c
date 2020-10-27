@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:53:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 09:29:56 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/26 19:59:59 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			set_var(t_all_info *info, double x_c, double y_c, t_eq_line line)
 	if (line.is_perpendicular == 1)
 	{
 		info->x1 = (x_c != info->xp) ? x_c : x_c + (info->size / 2);
-		info->x2 = (x_c != info->xp) ? x_c : info->x1 - (info->size / 2);
+		info->x2 = (x_c != info->xp) ? x_c : x_c - (info->size / 2);
 		info->y1 = (x_c != info->xp) ? y_c + (info->size / 2) : y_c;
 		info->y2 = (x_c != info->xp) ? y_c - (info->size / 2) : y_c;
 	}

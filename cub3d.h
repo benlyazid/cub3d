@@ -6,20 +6,20 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 19:17:48 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 11:18:26 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <mlx.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include "./libft/libft.h"
 # include <mlx.h>
 # include <math.h>
+
 typedef struct	s_desst_to_wall
 {
 	double	destance;
@@ -58,8 +58,10 @@ typedef struct	s_point
 
 typedef	struct	s_all_info
 {
+	int					fd;
 	int					bits;
 	int					line;
+	int					c;
 	int					cast_type;
 	double				xa;
 	double				ya;
@@ -88,20 +90,19 @@ typedef	struct	s_all_info
 	int					file_save;
 	unsigned	char	*header;
 	char				*buf;
-	uint16_t			bitcount;
+	int					bitcount;
 	int					w_bt;
-	uint32_t			imagesize;
-	uint32_t			bisize;
-	uint32_t			bfoffbits;
-	uint32_t			filesize;
-	uint16_t			biplanes;
+	int					imagesize;
+	int					bisize;
+	int					bfoffbits;
+	int					filesize;
+	int				biplanes;
 	t_color				color_coll;
 	double				old_debug;
 	t_color				color_flor;
 	char				*maps;
 	char				*file;
 	int					*mp;
-	int					sprite_alloc;
 	double				width;
 	double				height;
 	double				width_size;
@@ -156,6 +157,7 @@ typedef	struct	s_all_info
 	int					g;
 	int					b;
 	double				dst;
+	int					tt;
 }				t_all_info;
 
 typedef struct	s_equation_of_line
@@ -175,7 +177,7 @@ char			*get_maps(char *maps);
 int				get_width(char *file);
 int				get_height(char *file);
 char			*read_file(int fd);
-void			get_all_info(char *arg, t_all_info *info);
+void			get_all_info(t_all_info *info);
 int				size_of_height(int number, int height);
 int				draw_2d_maps(t_all_info *info);
 int				draw_bloc(int x, int y, t_all_info *info);
@@ -201,7 +203,7 @@ int				draw_image_view_angle_mini(t_all_info *info);
 void			draw_line_mini(t_all_info *info, int x1, int y1, int color);
 int				get_texteur_value(t_all_info *info, int	z, int type);
 int				get_sprite_value(t_all_info *f, double z,
-				int i, double x);
+				int i);
 int				rm_all(t_all_info *info);
 double			destance_2_points(double x1, double y1, double x2, double y2);
 t_eq_line		find_equation_of_line(double x1, double y1,
@@ -218,7 +220,7 @@ int				get_no_texteur_from_file(t_all_info *info);
 int				get_so_texteur_from_file(t_all_info *info);
 int				get_we_texteur_from_file(t_all_info *info);
 int				get_ea_texteur_from_file(t_all_info *info);
-void			set_error(int er, t_all_info *info);
+int				set_error(int er);
 int				get_color_flor(t_all_info *info);
 int				get_color_coll(t_all_info *info);
 int				check_the_maps(t_all_info *info);
@@ -253,5 +255,8 @@ int				suport(char c);
 int				check_border(char *maps, t_all_info *info);
 int				get_the_begin_of_the_map(char *file);
 char			*repiare_the_maps(char *maps);
+int				check_file_error(t_all_info *info, char *file);
+int				check_image_error(t_all_info *info);
+int				check_save_error(t_all_info *info, char *arg, int argc);
 
 #endif

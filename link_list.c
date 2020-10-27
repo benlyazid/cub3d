@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 17:27:25 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:45:45 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int			swap_struct(t_all_info *info)
 int			sort_by_destance(t_all_info *info)
 {
 	t_sprite	*sprite_save;
-	t_sprite	*sprite_change;
 
 	sprite_save = info->sprite_struct_start;
 	info->all_sprt = info->sprite_struct_start;

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 18:23:21 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/25 18:23:57 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 11:16:07 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_d_wall	calc_destance_to_wall(t_all_info *info)
 
 	xp = ray_casting_x(info);
 	yp = ray_casting_y(info);
-	xd = (xp.x >= 0 && xp.y >= 0) ? destance(info, xp.x, xp.y) : INT32_MAX;
-	yd = (yp.x >= 0 && yp.y >= 0) ? destance(info, yp.x, yp.y) : INT32_MAX;
+	xd = (xp.x >= 0 && xp.y >= 0) ? destance(info, xp.x, xp.y) : 2147483647;
+	yd = (yp.x >= 0 && yp.y >= 0) ? destance(info, yp.x, yp.y) : 2147483647;
 	if (xp.x >= 0 && xp.y >= 0 && yd >= xd)
 	{
 		dest_to_wall = initiall_data(xp, 'y', xd);

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 16:39:16 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 16:40:06 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:46:00 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		*get_mp(t_all_info *info)
 {
-	int	*mp;
 	int	i;
 	int	j;
 	int number_of_new_line;

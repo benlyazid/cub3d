@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/24 20:24:54 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/27 09:46:18 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	effect_move(int key, t_all_info *info)
 {
 	double xp;
 	double yp;
-	double angle;
 
 	if (key_is_supported(key))
 	{
@@ -91,23 +90,23 @@ int	effect_key_for_move(t_all_info *info, int key)
 {
 	if (key == 13)
 	{
-		info->xp += ((info->size / 5) * cos(info->angle * M_PI / 180));
+		info->xp += ((info->size / 4) * cos(info->angle * M_PI / 180));
 		info->yp += ((info->size / 5) * sin(info->angle * M_PI / 180));
 	}
 	if (key == 1)
 	{
-		info->xp -= ((info->size / 5) * cos(info->angle * M_PI / 180));
-		info->yp -= ((info->size / 5) * sin(info->angle * M_PI / 180));
+		info->xp -= ((info->size / 4) * cos(info->angle * M_PI / 180));
+		info->yp -= ((info->size / 4) * sin(info->angle * M_PI / 180));
 	}
 	if (key == 0)
 	{
-		info->xp -= ((info->size / 5) * cos((info->angle + 90) * M_PI / 180));
-		info->yp -= ((info->size / 5) * sin((info->angle + 90) * M_PI / 180));
+		info->xp -= ((info->size / 4) * cos((info->angle + 90) * M_PI / 180));
+		info->yp -= ((info->size / 4) * sin((info->angle + 90) * M_PI / 180));
 	}
 	if (key == 2)
 	{
-		info->xp += ((info->size / 5) * cos((info->angle + 90) * M_PI / 180));
-		info->yp += ((info->size / 5) * sin((info->angle + 90) * M_PI / 180));
+		info->xp += ((info->size / 4) * cos((info->angle + 90) * M_PI / 180));
+		info->yp += ((info->size / 4) * sin((info->angle + 90) * M_PI / 180));
 	}
 	return (0);
 }
