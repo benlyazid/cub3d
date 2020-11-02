@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbenlyaz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 00:34:27 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2019/10/13 05:47:30 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/29 10:17:55 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_num(long n, int base, int fd)
 
 void	fd_itoa(int n, int fd)
 {
-	double	base;
+	float	base;
 	long	nbr;
 
 	nbr = n;

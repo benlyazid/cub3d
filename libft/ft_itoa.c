@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbenlyaz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 19:09:32 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2019/10/18 03:05:42 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/29 10:17:55 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*errore(void)
 char	*ft_itoa(int n)
 {
 	int		i;
-	double	base;
+	float	base;
 	int		sighn;
 	long	nbr;
 

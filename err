@@ -1,0 +1,35 @@
+int	get_sprite_value(t_all_info *info, float z_sprite,  int index, int  type, float xf)
+{
+	float y;
+	float x;
+	float sprite_size;
+	float	sprite_angle;
+	float get_x_f;
+	float get_y_f;
+	int		get;
+	float xs;
+	float	ys;
+
+	xs = info->sprite_struct_all->x_center;
+	ys = info->sprite_struct_all->y_center;
+ 	sprite_size = (info->width / info->sprite_struct_all->dest) * info->size;
+	y = (info->width / 2) - (info->projection_sprite / 2);
+	sprite_angle = atan2f((info->sprite_struct_all->y_center) - info->yp  ,(info->sprite_struct_all->x_center) - info->xp);
+	 x = (sprite_angle - (info->angle * R_P) ) * info->width / (60.0 * M_PI / 180) + (info->width / 2 - sprite_size / 2);
+
+	get_x_f =  (x / info->size)  *  info->sprite_w;
+	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
+	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
+	if (x < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
+	{	
+		if (x > 0.0 && x < info->size)
+		{
+			if (info->data_sprite[get] > 0x000000 )
+			{
+				info->data_3d[index] =info->data_sprite[get];	
+			}
+			return(x);
+		}		
+	}
+	return (0);
+}

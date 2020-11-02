@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/27 09:46:18 by kbenlyaz         ###   ########.fr       */
+/*   Created:(20/01/02 17:42:11 by kbenlyaz          #+#    #+#             */
+/*   Updated:(20/10/31 18:29:12 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,99 +14,88 @@
 
 #define R_P ( M_PI / 180)
 
-int	check_abilitie_to_move(t_all_info *info, int key)
+int			check_abilitie_to_move(t_all_info *info, int key)
 {
 	int		index_x;
 	int		index_y;
-	int		index;
+	int 	index;
 	double	angle;
 
 	key = 0;
-	angle = 0;
-	while (angle <= 2 * M_PI)
-	{
-		index_x = ((int)info->xp + ((info->size / 4) * (int)cos(angle)))
-		/ (int)info->size;
-		index_y = ((int)info->yp + ((info->size / 4) * (int)sin(angle)))
-		/ (int)info->size;
-		index = (index_y * (int)info->width_number + index_x);
-		if (info->mp[index] == 1 || info->mp[index] == 2)
+	angle = info->angle;
+
+	index_x = ((int)info->xp + ((info->size / 2) * (int)cos(angle * R_P))) / (int)info->size;
+	index_y = ((int)info->yp + ((info->size / 2) * (int)sin(angle * R_P))) / (int)info->size;	
+	
+	index_x = info->xp / info->size;
+	index_y = info->yp / info->size;
+	index = (index_y * (int)info->width_number + index_x);
+	if (info->mp[index] == 1 || info->mp[index] == 2)
 			return (0);
-		angle += (0.5 * M_PI / 180);
-	}
 	return (1);
 }
 
-int	update_angle(t_all_info *info, int key)
+int			effect_move(int key, t_all_info *info)
 {
-	if (key == 124)
-		info->angle += 10;
-	if (key == 123)
-		info->angle -= 10;
-	if (info->angle == 370)
-		info->angle = 10;
-	if (info->angle == 0)
-		info->angle = 360;
-	return (1);
-}
+	float xp;
+	float yp;
+	float angle;
 
-int	key_is_supported(int key)
-{
-	if (key == 53 || key == 2 || key == 0 || key == 13 ||
-	key == 1 || key == 124 || key == 123)
-		return (1);
-	return (0);
-}
-
-int	effect_move(int key, t_all_info *info)
-{
-	double xp;
-	double yp;
-
-	if (key_is_supported(key))
+	if (key ==53 || key == 2 || key == 0 || key == 13 || key == 1 || key == 124 || key == 123)
 	{
+		angle = info->angle;
 		if (key == 53)
-		{
-			free(info->mp);
-			free(info);
 			exit(1);
-		}
+		if (key == 124)
+			info->angle += 5;
+		if (key == 123)
+			info->angle -= 5;
 		xp = info->xp;
 		yp = info->yp;
-		update_angle(info, key);
-		effect_key_for_move(info, key);
+		if (info->angle == 365)
+			info->angle = 5;
+		if (info->angle == 0)
+			info->angle = 360 ;
+		effect_key_for_move(info, key, 2);
 		if (check_abilitie_to_move(info, key))
 		{
+				info->xp = xp;
+				info->yp = yp;
+				effect_key_for_move(info, key, 1);
 			draw_2d_maps(info);
 			return (1);
 		}
+		
 		info->xp = xp;
 		info->yp = yp;
 	}
 	return (0);
 }
 
-int	effect_key_for_move(t_all_info *info, int key)
+int		effect_key_for_move(t_all_info *info, int key, int multiple)
 {
-	if (key == 13)
+
+	if (key == 13) // w
 	{
-		info->xp += ((info->size / 4) * cos(info->angle * M_PI / 180));
-		info->yp += ((info->size / 5) * sin(info->angle * M_PI / 180));
+		info->xp += ((20 * multiple) * cos(info->angle * M_PI / 180));
+		info->yp += ((20 * multiple) * sin(info->angle * M_PI / 180)); 
 	}
-	if (key == 1)
+	if (key == 1) //s
 	{
-		info->xp -= ((info->size / 4) * cos(info->angle * M_PI / 180));
-		info->yp -= ((info->size / 4) * sin(info->angle * M_PI / 180));
+		info->xp -= ((20 * multiple) * cos(info->angle * M_PI / 180));
+		info->yp -= ((20 * multiple) * sin(info->angle * M_PI / 180)); 
 	}
-	if (key == 0)
+	
+	
+	if (key == 0) // a
 	{
-		info->xp -= ((info->size / 4) * cos((info->angle + 90) * M_PI / 180));
-		info->yp -= ((info->size / 4) * sin((info->angle + 90) * M_PI / 180));
+		info->xp -= ((20 * multiple) * cos((info->angle + 90) * M_PI / 180));
+		info->yp -= ((20 * multiple) * sin((info->angle + 90) * M_PI / 180));
 	}
-	if (key == 2)
+	if (key == 2) //d
 	{
-		info->xp += ((info->size / 4) * cos((info->angle + 90) * M_PI / 180));
-		info->yp += ((info->size / 4) * sin((info->angle + 90) * M_PI / 180));
+		info->xp += ((20 * multiple) * cos((info->angle + 90) * M_PI / 180));
+		info->yp += ((20 * multiple) * sin((info->angle + 90) * M_PI / 180));
 	}
 	return (0);
 }

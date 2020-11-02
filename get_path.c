@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:10:52 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/26 09:19:35 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/10/22 08:30:10 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,35 +113,6 @@ char	*get_ea_texteur_path(t_all_info *info)
 		(i == 0 || info->file[i - 1] == '\n'))
 		{
 			i += 2;
-			if (info->file[i] != ' ')
-				return (path);
-			while (info->file[i] == ' ')
-				i++;
-			j = i;
-			while (info->file[j] != '\n')
-				j++;
-			path = ft_substr(info->file, i, j - i);
-			return (path);
-		}
-		i++;
-	}
-	return (path);
-}
-
-char	*get_sprite_path(t_all_info *info)
-{
-	char	*path;
-	int		i;
-	int		j;
-
-	path = NULL;
-	i = 0;
-	while (info->file[i])
-	{
-		if (info->file[i] == 'S' && info->file[i + 1] != 'O' &&
-		(i == 0 || info->file[i - 1] == '\n'))
-		{
-			i++;
 			if (info->file[i] != ' ')
 				return (path);
 			while (info->file[i] == ' ')
