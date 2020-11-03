@@ -6,88 +6,13 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/31 18:26:37 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 09:04:18 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #define R_P ( M_PI / 180)
 
-
-float	get_sprite_value0(t_all_info *info, float z_sprite,  int index, int  type, float x)
-{
-	float	x_offsite;
-	int		get;
-	float	get_x_f, get_y_f;
-	float xp, yp, xs, ys, xv, yv, xx, yy;
-
-	xp = info->xp;
-	yp = info->yp;
-	xs = info->sprite_struct_all->x_center;
-	ys = info->sprite_struct_all->y_center;
-	xx = info->sprite_struct_all->x;
-	yy = info->sprite_struct_all->y;
-	t_point begin;
-
-	t_eq_line player_sprite = find_equation_of_line(xp, yp, xx, yy);
-
-
-	t_eq_line player_sprite_center = find_equation_of_line(xp, yp, xs, ys);
-
-	t_eq_line sprite_center;
-	if (player_sprite_center.m != 0)
-	{
-		sprite_center.is_perpendicular = 0;
-		sprite_center.m = -1 / player_sprite_center.m;
-		sprite_center.b = ys - (xs * sprite_center.m);
-	}
-	else
-	{
-		sprite_center.is_perpendicular = 1;
-		sprite_center.m = 0;
-		sprite_center.b = ys;
-	}
-	if (player_sprite.m == 0)
-	{
-		player_sprite.is_perpendicular = 1;
-		player_sprite.m = 0;
-		player_sprite.b = ys;
-	}
-	xv = entersection_two_line(sprite_center, player_sprite, info).x;
-	yv = entersection_two_line(sprite_center, player_sprite, info).y;
-	if (player_sprite.m == 0)
-	{		
-		xv = info->old_point.x;
-		yv = info->old_point.y;
-	}	
-	begin = enter_line_circle(info, xs, ys, info->size / 2, sprite_center);
-	t_eq_line player_view;
-	x_offsite = destance_2_points(begin.x, begin.y, xv, yv);
-	if ((int)info->old_debug  == -1)
-		info->old_debug = x_offsite;	
-	get_x_f =  (x_offsite / info->size)  *  info->sprite_w;
-	get_y_f = (z_sprite  / info->projection_sprite) * info->sprite_h;
-	get = (int)get_y_f * info->sprite_w + (int)get_x_f;
-	if ((int)info->old_debug != (int)x_offsite)
-	{
-		info->old_debug = x_offsite;
-	}
-	if (destance_2_points(xs, ys, xv, yv) < info->size / 2 && x_offsite < info->size && get >= 0 && get < (int)info->sprite_h * (int)info->sprite_w)
-	{	
-		info->test =  1;
-		info->old_point.x = xv;
-		info->old_point.y = yv;
-		if (x_offsite > 0.0 && x_offsite < info->size)
-		{
-			if (info->data_sprite[get] > 0x000000 )
-			{
-				info->data_3d[index] = info->data_sprite[get];	
-			}
-			return(x_offsite);
-		}		
-	}
-		return (x_offsite);
-}
 
 int get_sprite_from_file(t_all_info *info)
 {
@@ -128,58 +53,6 @@ int get_sprite_from_file(t_all_info *info)
 	return 1;
 }
 
-float	get_sprite_value_tst(t_all_info *info)
-{
-	float	x;
-	float	y;
-	float	x_offsite;
-	float	xc;
-	float	yc;
-	
-	yc = info->sprite_struct_all->y_center;
-	xc = info->sprite_struct_all->x_center;
-	x = (cos(info->angle * R_P) * info->rayon) + info->xp;
-	y = (sin(info->angle * R_P) * info->rayon) + info->yp;
-	x_offsite = DEST_2P(x, y, xc, yc);
-	if (info->yp == yc && xc < info->xp)
-	{
-		if (y < yc )
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
-	if (info->yp == yc && xc > info->xp)
-	{
-		if (y > yc )
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
-	if (info->yp > yc)
-	{
-		if (x == xc )
-		{
-			if (y > yc)
-				x_offsite = fabsf(y - yc) + (info->size / 2);
-			else
-				x_offsite = (info->size / 2) - fabsf(y - yc);
-		}		
-		if (x > xc)
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
-	else if (info->yp < yc)
-	{
-		if (x <= xc)
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
-	//if (get >-1 && get < (int)info->sprite_h * (int)info->sprite_w && info->data_sprite[get] > 0x000000)
-		//info->data_3d[index] = info->data_sprite[get];
-	return (x_offsite);
-}
 float	get_sprite_value(t_all_info *info)
 {
 	float	x;
@@ -187,25 +60,30 @@ float	get_sprite_value(t_all_info *info)
 	float	x_offsite;
 	float	xc;
 	float	yc;
-	
+	float	angle_center, angle_ray, x_angle;
+
 	yc = info->sprite_struct_all->y_center;
 	xc = info->sprite_struct_all->x_center;
 	x = (cos(info->angle * R_P) * info->rayon) + info->xp;
 	y = (sin(info->angle * R_P) * info->rayon) + info->yp;
 	x_offsite = DEST_2P(x, y, xc, yc);
-	if (info->xp > xc)
-	{
-		if (atan2f(y, x) > atan2f(yc, xc))
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
+	//angle_center is 180 =  angle + x
+	if (info->yp > yc)
+		angle_center = -acos((xc - info->xp) / info->rayon) * 180 / M_PI;
 	else
-	{
-		if (atan2f(y, x) > atan2f(yc, xc))
-			x_offsite += (info->size / 2);
-		else
-			x_offsite = (info->size / 2) - x_offsite;
-	}
+		angle_center = acos((xc - info->xp) / info->rayon) * 180 / M_PI;
+
+	x_angle = 180 - angle_center;
+	angle_ray = x_angle + info->angle;
+	if (angle_ray < 0)
+		angle_ray = 360 + angle_ray;
+	if (angle_ray > 360)
+		angle_ray -= 360;
+	if (angle_ray > 180)
+		x_offsite += (info->size / 2);
+	else
+		x_offsite = (info->size / 2) - x_offsite;
+	
+	
 	return (x_offsite);
 }

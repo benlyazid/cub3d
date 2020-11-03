@@ -6,13 +6,11 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 11:33:13 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/02 16:15:38 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 10:31:29 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-//396
 
 int	loop(t_all_info *info)
 {
@@ -22,7 +20,6 @@ int	loop(t_all_info *info)
 }
 int		main(int argc, char *argv[])
 {	
-	//float start = clock();
 	int ret;
 	ret = 0;
 	t_all_info	*info;
@@ -66,6 +63,7 @@ int		main(int argc, char *argv[])
 	info->win_ptr = mlx_new_window(info->mlx_ptr, info->width, info->height, "mlx");
 	info->img_3d = mlx_new_image(info->mlx_ptr, info->width, info->height);
 	info->data_3d = (int*)mlx_get_data_addr(info->img_3d, &a, &b, &c);
+	printf("%d	%d	%d	\n", a, b, c);
 
 	ret += get_no_texteur_from_file(info);
 	ret += get_ea_texteur_from_file(info);
@@ -106,4 +104,3 @@ int		main(int argc, char *argv[])
 
 	return (0);
 }	
-//1160 560

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 17:24:08 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/10/21 19:43:39 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 10:31:03 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int save(t_all_info *info)
 	uint32_t bfOffBits = 54; 
 	uint32_t filesize = 54 + imagesize;
 	uint16_t biPlanes = 1;
-	//unsigned char header[54] = { 0 };
 	unsigned char *header = malloc(54);
 
 	

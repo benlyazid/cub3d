@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/02 10:44:11 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:33:29 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int				get_x_value(t_all_info *info, float img_size_w, float
 img_size_h, int *data);
 int				get_y_value(t_all_info *info, float img_size_w, float
 img_size_h, int *data);
-int				get_flor_texteur(t_all_info *info);
+int				get_flor_texteur(t_all_info *info, int type);
 
 #include <time.h>
 clock_t start, end;

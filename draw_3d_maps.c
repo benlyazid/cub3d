@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/02 16:57:03 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 10:27:07 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 {
 	float	destance_to_the_wall;
 	float	projection_wall;
-	float	projection_flor;
 	int		start;
 	int		z;
 	int		index;
@@ -58,8 +57,6 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 	t_sprite *save;
 	int		y0;
 	int		color_index;
-	float	flor_dest;
-	float	start_flor, end_flor, flor_xoffsite;
 
 	info->sprite_struct_all = malloc(sizeof(t_sprite));
 	info->sprite_struct_start = info->sprite_struct_all;
@@ -75,13 +72,11 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 	if (end > info->height)
 		end = info->height;
 
-
-
-	 z = end - 1;
+	z = end - 1;
 	x_offsite = get_texteur_value(info, wall_dest.type);
 	while (z > -1 && z > start)
 	{
-		index = (z * info->width) + (int)x; 
+		index = (z * info->width) + x; 
 		if (index >= 0 && index < (int)info->height * (int)info->width)
 		{
 			info->z = z - start;
@@ -89,23 +84,6 @@ int		draw_3d_image(t_all_info *info, float x, float alpha)
 			color_index = ((int)y0 * info->txt_img_size_w) + (int)x_offsite;
 			if (x_offsite >= 0 && x_offsite < info->txt_img_size_w && y0 >= 0 && y0 < info->txt_img_size_h)
 				info->data_3d[index] = info->txt_img_data[color_index];
-		}
-		z--;
-	}
-	z = info->height;
-
-	while (z > end)
-	{
-		index = (z * info->width) + (int)x;
-		if (index >= 0 && index < (int)info->height * (int)info->width)
-		{
-			//info->z = z - start;
-			y0 = (z - start) * info->txt_img_size_h / info->projection_wall;
-			color_index = ((int)y0 * info->img_hno) + (int)x_offsite;
-			if (x_offsite >= 0 && x_offsite < info->img_wno)
-			{		
-				info->data_3d[index] = info->data_texteur_no[color_index];
-			}
 		}
 		z--;
 	}
@@ -219,7 +197,7 @@ int				draw_all_image_3d(t_all_info *info)
 	x = 0;
 	info->dst_player_projection = (info->width / 2) / tan (M_PI / 6 );
 	draw_flor_sol(info);
-	//TIME(
+	TIME(
 	while (x < info->width)
 	{
 		info->angle += alpha;
@@ -228,7 +206,7 @@ int				draw_all_image_3d(t_all_info *info)
 		alpha+= (60 / info->width);
 		x+= 1;
 	}
-	//)
+	)
 	 info->angle = save_angle;
 	return (0);
 }
