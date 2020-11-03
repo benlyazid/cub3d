@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 19:31:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 10:27:46 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 11:29:52 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,14 @@ int	get_x_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
 {
 	float	x0;
 	float	y0;
-	int	index_0;
-	
+	int		index_0;
+
 	x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
 	x0 = (info->x_wall % (int)info->size) * img_size_w / info->size;
 	info->txt_img_size_h = img_size_h;
 	info->txt_img_size_w = img_size_w;
 	info->txt_img_data = data;
-	y0 = info->z * img_size_h / info->projection_wall;
-	index_0 = ((int)y0 * img_size_w) + (int)x0;
-	if (x0 >= 0 && x0 < img_size_w && y0 >= 0 && y0 < img_size_h)
-		return (x0);
-	return (0);
+	return (x0);
 }
 
 int	get_y_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
@@ -40,12 +36,7 @@ int	get_y_value(t_all_info *info, float img_size_w, float img_size_h, int *data)
 	info->txt_img_size_w = img_size_w;
 	info->txt_img_data = data;
 	x0 = (info->y_wall % (int)info->size) * img_size_w / info->size;
-	y0 = info->z * img_size_h / info->projection_wall;
-	index_0 = ((int)y0 * img_size_w) + (int)x0;
-	if (x0 >= 0 && x0 < img_size_w && y0 >= 0 && y0 < img_size_h)
-		return (x0);
-
-	return (0);
+	return (x0);
 }
 
 int	get_texteur_value(t_all_info *info, int type)

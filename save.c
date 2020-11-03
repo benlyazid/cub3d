@@ -5,56 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/18 17:24:08 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 10:31:03 by kbenlyaz         ###   ########.fr       */
+/*   Created: 2020/10/24 08:16:41 by kbenlyaz          #+#    #+#             */
+/*   Updated: 2020/11/03 11:28:21 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int save(t_all_info *info)
+int	initailize_variable(t_all_info *info)
 {
-	uint16_t bitcount = 24;
-	int width = (int) info->width;
-	int height = (int) info->height;
-	int width_in_bytes = ((width * bitcount + 31) / 32) * 4;
-	uint32_t imagesize = width_in_bytes * height;
-	uint32_t biSize = 40;
-	uint32_t bfOffBits = 54; 
-	uint32_t filesize = 54 + imagesize;
-	uint16_t biPlanes = 1;
-	unsigned char *header = malloc(54);
+	int	i;
+	int	width;
+	int	height;
 
-	
+	i = 0;
+	width = info->width;
+	height = info->height;
+	info->bitcount = 24;
+	info->w_bt = ((width * info->bitcount + 31) / 32) * 4;
+	info->imagesize = info->w_bt * height;
+	info->bisize = 40;
+	info->bfoffbits = 54;
+	info->filesize = 54 + info->imagesize;
+	info->biplanes = 1;
+	info->header = malloc(54 + 1);
+	info->buf = malloc(info->imagesize + 1);
+	while (i < 55)
+	{
+		info->header[i] = 0;
+		i++;
+	}
+	return (1);
+}
 
-    ft_memcpy(header, "BM", 2);
-    ft_memcpy(header + 2 , &filesize, 4);
-    ft_memcpy(header + 10, &bfOffBits, 4);
-    ft_memcpy(header + 14, &biSize, 4);
-    ft_memcpy(header + 18, &width, 4);
-    ft_memcpy(header + 22, &height, 4);
-    ft_memcpy(header + 26, &biPlanes, 2);
-    ft_memcpy(header + 28, &bitcount, 2);
-    ft_memcpy(header + 34, &imagesize, 4);
-    char* buf = malloc(imagesize);
-    for(int row = height - 1; row >= 0; row--)
-    {
-        for(int col = 0; col < width; col++)
-        {      int color = info->data_3d[row * width + col];
-                 int r =  (color / 65536) % 256;
-                int g = (color / 256) % 256;
-                int b = color % 256;;
-            buf[row * width_in_bytes + col * 3 + 0] = b;//blue
-            buf[row * width_in_bytes + col * 3 + 1] = g;//green
-            buf[row * width_in_bytes + col * 3 + 2] = r;//red
-        }
-    }
+int	mem_copy_header(t_all_info *info)
+{
+	int	width;
+	int	height;
 
-	FILE *fout = fopen("save.bmp", "wb");
+	width = info->width;
+	height = info->height;
+	ft_memcpy(info->header, "BM", 2);
+	ft_memcpy(info->header + 2, &info->filesize, 4);
+	ft_memcpy(info->header + 10, &info->bfoffbits, 4);
+	ft_memcpy(info->header + 14, &info->bisize, 4);
+	ft_memcpy(info->header + 18, &width, 4);
+	ft_memcpy(info->header + 22, &height, 4);
+	ft_memcpy(info->header + 26, &info->biplanes, 2);
+	ft_memcpy(info->header + 28, &info->bitcount, 2);
+	ft_memcpy(info->header + 34, &info->imagesize, 4);
+	info->header[54] = '\0';
+	return (1);
+}
 
-	fwrite(header, 1, 54, fout);
-	fwrite((char*)buf, 1, imagesize, fout);
-	fclose(fout);
-	free(buf);
-	return (0);
+int	save_in_file(t_all_info *info)
+{
+	int	fd;
+
+	fd = open("save.bmp", O_WRONLY | O_CREAT, 0644);
+	write(fd, info->header, 54);
+	write(fd, info->buf, info->imagesize);
+	close(fd);
+	free(info->buf);
+	free(info->header);
+	return (1);
+}
+
+int	save_bmp(t_all_info *info)
+{
+	int	width;
+	int	height;
+	int	row;
+	int	col;
+
+	row = -1;
+	initailize_variable(info);
+	mem_copy_header(info);
+	width = info->width;
+	height = info->height;
+	while (++row < height)
+	{
+		col = 0;
+		while (col < width)
+		{
+			info->uc = info->data_3d[(height - row) * width + col];
+			info->buf[row * info->w_bt + col * 3 + 0] = info->uc % 256;
+			info->buf[row * info->w_bt + col * 3 + 1] = (info->uc / 256) % 256;
+			info->buf[row * info->w_bt + col * 3 + 2] = (info->uc / 65536) %
+			256;
+			col++;
+		}
+	}
+	save_in_file(info);
+	return (1);
 }

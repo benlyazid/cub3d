@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 11:33:13 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 10:31:29 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/03 11:05:50 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		main(int argc, char *argv[])
 	int a ,b,c, sw, sh;
 	info = malloc(sizeof(t_all_info));
 	info->sprite_struct_start = NULL;
-	info->sprite_alloc = 0;
 	info->sprite_struct_all = NULL;
 	
 	int	fd;
