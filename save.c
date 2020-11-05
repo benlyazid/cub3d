@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 08:16:41 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 11:28:21 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/05 11:45:50 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ int	save_in_file(t_all_info *info)
 	close(fd);
 	free(info->buf);
 	free(info->header);
+	free(info->mp);
+	free(info->maps);
+	free(info->file);
+	free(info);
 	return (1);
 }
 

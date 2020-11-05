@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 13:45:16 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:07:09 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include "./libft/libft.h"
 # include <mlx.h>
 # include <math.h>
-#define DEST_2P(X1, Y1, X2, Y2) sqrt(pow(X1 - X2, 2) + pow(Y1 - Y2, 2));
-#define R_P ( M_PI / 180)
+# define DEST_2P(X1, Y1, X2, Y2) sqrt(pow(X1 - X2, 2) + pow(Y1 - Y2, 2));
+# define R_P ( M_PI / 180)
 
 typedef struct	s_desst_to_wall
 {
@@ -58,6 +58,14 @@ typedef	struct	s_sprite
 
 typedef	struct	s_all_info
 {
+	int			moins;
+	float		x;
+	float		y;
+	float		xa;
+	float		ya;
+	int			end;
+	int			start;
+	t_d_wall	wall_dest;
 	int			uc;
 	int			bitcount;
 	int			w_bt;
@@ -68,11 +76,11 @@ typedef	struct	s_all_info
 	int			filesize;
 	char		*header;
 	char		*buf;
-	float		txt_img_size_w;
-	float		txt_img_size_h;
+	float		txt_w;
+	float		txt_h;
 	int			*txt_img_data;
-	t_color		color_coll;
-	t_color		color_flor;
+	t_color		clr_c;
+	t_color		clr_f;
 	char		*maps;
 	char		*file;
 	int			*mp;
@@ -109,13 +117,13 @@ typedef	struct	s_all_info
 	int			img_wea;
 	int			*data_sprite;
 	void		*sprite_img;
-	float		sprite_h;
-	float		sprite_w;
+	float		sprt_h;
+	float		sprt_w;
 	int			sprite;
-	float		projection_sprite;
+	float		prjct_sprit;
 	float		save_angle;
 	float		projection_wall;
-	t_sprite	*sprite_struct_all;
+	t_sprite	*sprt_strct_all;
 	t_sprite	*sprite_struct_start;
 	float		size;
 	float		rayon;
@@ -162,9 +170,9 @@ int				get_no_texteur_from_file(t_all_info *info);
 int				get_so_texteur_from_file(t_all_info *info);
 int				get_we_texteur_from_file(t_all_info *info);
 int				get_ea_texteur_from_file(t_all_info *info);
-void			set_error(int type_of_error);
-int				get_color_flor(t_all_info *info);
-int				get_color_coll(t_all_info *info);
+void			set_error(int type_of_error, t_all_info *info);
+int				get_clr_f(t_all_info *info);
+int				get_clr_c(t_all_info *info);
 int				check_the_maps(t_all_info *info);
 int				get_max_h(char *maps);
 int				get_max_w(char *maps);
@@ -177,14 +185,22 @@ char			*get_ea_texteur_path(t_all_info *info);
 int				get_number(char *str);
 int				get_height(char	*str);
 int				get_width(char *file);
-char			*repiare_the_maps(char *maps);
-int 			is_player(char c);
+int				is_player(char c);
 int				check_border(char *maps, t_all_info *info);
-int 			not_supported(char c);
+int				not_supported(char c);
 char			*repiare_the_maps(char *maps);
-
-#include <time.h>
-clock_t start, end;
-#define TIME(x) start = clock(); x; end = clock(); printf("time taken by %.*s...: %lf\nFPS: %lf\n", 20, #x, ((double) (end - start)) / CLOCKS_PER_SEC, (double)1 / (((double) (end - start)) / CLOCKS_PER_SEC));
-
+int				draw_flor_sol(t_all_info *info);
+void			insert_sprite_to_x(t_all_info *info, int m, float x, float y);
+void			initial_x_ray(t_all_info *info);
+void			add_sprit_to_x(t_all_info *info, int moins, float x, float y);
+int				check_file_ext(char *str);
+char			*join(char *s1, char *s2);
+int				check_line_spaces(char *maps);
+int				check_for_unsuported_element(char *file);
+int				check_error(t_all_info *info, char *argv[]);
+int				check_error2(t_all_info *info, char *argv[]);
+int				check_save(t_all_info *info, char *argv[], int argc);
+int				save_in_file(t_all_info *info);
+int				save_bmp(t_all_info *info);
+int				check_xpm_ext(char *path);
 #endif

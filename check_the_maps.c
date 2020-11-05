@@ -6,13 +6,13 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 13:41:25 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 19:31:35 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:15:53 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check(int i, t_all_info *info, int j)
+int		check(int i, t_all_info *info, int j)
 {
 	if (info->maps[i] == '-' || info->maps[i] == '*')
 	{
@@ -37,22 +37,21 @@ int	check(int i, t_all_info *info, int j)
 	return (1);
 }
 
-int	check_arrownd(char *maps, t_all_info *info)
+int		check_arrownd(char *maps, t_all_info *info)
 {
 	int i;
 	int j;
 	int k;
 	int player;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	player = 0;
-	while (maps[i])
+	while (maps[++i])
 	{
-		if (not_supported(maps[i]) == -1)
+		if (not_supported(maps[i]) == -1 || (is_player(maps[i]) == 1
+		&& ++player > 1))
 			return (-100);
-		if (is_player(maps[i]) == 1 && ++player > 1)
-			return (-99);
 		if (maps[i] == '\n')
 			j++;
 		if (!check(i, info, j))
@@ -60,11 +59,9 @@ int	check_arrownd(char *maps, t_all_info *info)
 		k = 0;
 		while (maps[i + k] && maps[i] == '-' && maps[i + k] == '-')
 			k++;
-		if (k == info->width_number)
+		if (k == info->width_number || (i > 0 && maps[i] == '\n'
+		&& maps[i - 1] == '\n'))
 			return (-50);
-		if (i > 0 && maps[i] == '\n' && maps[i - 1] == '\n')
-			return (-500);
-		i++;
 	}
 	return (player) != 0 ? 1 : -1;
 }
@@ -112,6 +109,8 @@ int		check_the_maps(t_all_info *info)
 	if (i == -1)
 		return (-1);
 	maps = ft_strdup(info->file + i);
+	if (!check_line_spaces(maps))
+		return (-1);
 	info->maps = repiare_the_maps(maps);
 	info->height_number = get_max_h(info->maps);
 	info->width_number = get_max_w(info->maps);
