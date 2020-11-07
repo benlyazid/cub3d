@@ -6,7 +6,7 @@
 #    By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 09:33:45 by kbenlyaz          #+#    #+#              #
-#    Updated: 2020/11/05 12:24:27 by kbenlyaz         ###   ########.fr        #
+#    Updated: 2020/11/06 09:14:26 by kbenlyaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,4 +33,8 @@ clean :
 fclean : clean
 	/bin/rm -f $(NAME)
 
+run :
+	./$(NAME) file.cub
+save : 
+	./$(NAME) file.cub --save
 re : fclean all

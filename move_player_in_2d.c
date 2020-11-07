@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 12:06:14 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 12:06:17 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/07 16:48:30 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		exit_game(t_all_info *info)
 {
 	free(info->mp);
 	free(info);
-	exit(1);
+	exit(0);
 }
 
 int			check_abilitie_to_move(t_all_info *info, int key)
@@ -41,10 +41,6 @@ int			check_abilitie_to_move(t_all_info *info, int key)
 
 	key = 0;
 	angle = info->angle;
-	index_x = ((int)info->xp + ((info->size / 2) *
-	(int)cos(angle * R_P))) / (int)info->size;
-	index_y = ((int)info->yp + ((info->size / 2) *
-	(int)sin(angle * R_P))) / (int)info->size;
 	index_x = info->xp / info->size;
 	index_y = info->yp / info->size;
 	index = (index_y * (int)info->width_number + index_x);
@@ -66,7 +62,7 @@ int			effect_move(int key, t_all_info *info)
 			exit_game(info);
 		xp = info->xp;
 		yp = info->yp;
-		effect_key_for_move(info, key, 2);
+		effect_key_for_move(info, key, 3);
 		if (check_abilitie_to_move(info, key))
 		{
 			info->xp = xp;
@@ -85,23 +81,23 @@ int			effect_key_for_move(t_all_info *info, int key, int multiple)
 {
 	if (key == 13)
 	{
-		info->xp += ((20 * multiple) * cos(info->angle * M_PI / 180));
-		info->yp += ((20 * multiple) * sin(info->angle * M_PI / 180));
+		info->xp += ((15 * multiple) * cos(info->angle * M_PI / 180));
+		info->yp += ((15 * multiple) * sin(info->angle * M_PI / 180));
 	}
 	if (key == 1)
 	{
-		info->xp -= ((20 * multiple) * cos(info->angle * M_PI / 180));
-		info->yp -= ((20 * multiple) * sin(info->angle * M_PI / 180));
+		info->xp -= ((15 * multiple) * cos(info->angle * M_PI / 180));
+		info->yp -= ((15 * multiple) * sin(info->angle * M_PI / 180));
 	}
 	if (key == 0)
 	{
-		info->xp -= ((20 * multiple) * cos((info->angle + 90) * M_PI / 180));
-		info->yp -= ((20 * multiple) * sin((info->angle + 90) * M_PI / 180));
+		info->xp -= ((15 * multiple) * cos((info->angle + 90) * M_PI / 180));
+		info->yp -= ((15 * multiple) * sin((info->angle + 90) * M_PI / 180));
 	}
 	if (key == 2)
 	{
-		info->xp += ((20 * multiple) * cos((info->angle + 90) * M_PI / 180));
-		info->yp += ((20 * multiple) * sin((info->angle + 90) * M_PI / 180));
+		info->xp += ((15 * multiple) * cos((info->angle + 90) * M_PI / 180));
+		info->yp += ((15 * multiple) * sin((info->angle + 90) * M_PI / 180));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 09:17:46 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:31:25 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void		swap_sprite(t_all_info *info)
 {
 	t_sprite	*sprite_change;
 
-	sprite_change = (t_sprite*)malloc(sizeof(t_sprite));
+	if (!(sprite_change = (t_sprite*)malloc(sizeof(t_sprite))))
+		return ;
 	sprite_change->dest = info->sprt_strct_all->next->dest;
 	info->sprt_strct_all->next->dest = info->sprt_strct_all->dest;
 	info->sprt_strct_all->dest = sprite_change->dest;

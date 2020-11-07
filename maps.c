@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 13:39:06 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/04 10:36:33 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:33:02 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int		*get_mp(t_all_info *info)
 	int	number_of_new_line;
 
 	number_of_new_line = get_max_h(info->maps);
-	info->mp = (int*)malloc(sizeof(int) * (ft_strlen(info->maps)
-	- number_of_new_line + 1));
+	if (!(info->mp = (int*)malloc(sizeof(int) * (ft_strlen(info->maps))
+	- number_of_new_line + 1)))
+		return (mp);
 	i = 0;
 	j = 0;
 	while (info->maps[i])

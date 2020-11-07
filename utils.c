@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:37:30 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 14:18:58 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 12:37:13 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		check_line_spaces(char *maps)
 			i++;
 			while (maps[i] && maps[i] == ' ')
 				i++;
-			if (maps[i] && maps[i] == '\n')
+			if (i != 0 && maps[i] && maps[i] == '\n' && maps[i - 1] == ' ')
 				return (0);
 		}
 		i++;

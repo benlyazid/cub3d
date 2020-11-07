@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 19:55:05 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/04 12:16:30 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/07 08:21:23 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 void		initial_value(t_all_info *info, float alpha)
 {
-	info->sprt_strct_all = malloc(sizeof(t_sprite));
+	if (!(info->sprt_strct_all = malloc(sizeof(t_sprite))))
+		return ;
 	info->sprite_struct_start = info->sprt_strct_all;
 	info->wall_dest = calc_destance_to_wall(info);
 	info->x_wall = info->wall_dest.x_wall;

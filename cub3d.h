@@ -6,14 +6,13 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 14:07:09 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/07 16:57:03 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <mlx.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -171,8 +170,8 @@ int				get_so_texteur_from_file(t_all_info *info);
 int				get_we_texteur_from_file(t_all_info *info);
 int				get_ea_texteur_from_file(t_all_info *info);
 void			set_error(int type_of_error, t_all_info *info);
-int				get_clr_f(t_all_info *info);
-int				get_clr_c(t_all_info *info);
+void			get_clr_f(t_all_info *info);
+void			get_clr_c(t_all_info *info);
 int				check_the_maps(t_all_info *info);
 int				get_max_h(char *maps);
 int				get_max_w(char *maps);

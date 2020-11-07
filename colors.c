@@ -6,13 +6,13 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:08:55 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/04 18:35:43 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/07 16:57:10 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_color(char *str)
+int		check_color(char *str)
 {
 	int	i;
 	int	j;
@@ -29,13 +29,12 @@ int	check_color(char *str)
 	return (1);
 }
 
-int	set_color_f(t_all_info *info, int i, char type)
+int		set_color_f(t_all_info *info, int i, char type)
 {
-	int color;
-
 	while (type == 'r' && info->file[i] == ' ')
 		i++;
-	while (info->file[i] == '0')
+	while (info->file[i] == '0' && info->file[i + 1] &&
+		ft_isdigit(info->file[i + 1]))
 		i++;
 	if (type != 'r')
 	{
@@ -58,7 +57,7 @@ int	set_color_f(t_all_info *info, int i, char type)
 	return (i);
 }
 
-int	get_clr_f(t_all_info *info)
+void	get_clr_f(t_all_info *info)
 {
 	int i;
 
@@ -74,7 +73,8 @@ int	get_clr_f(t_all_info *info)
 			i = set_color_f(info, i, 'r');
 			i = set_color_f(info, i, 'g');
 			i = set_color_f(info, i, 'b');
-			if (info->clr_f.r + info->clr_f.g + info->clr_f.b > 766)
+			if (info->clr_f.r > 255 || info->clr_f.g > 255 ||
+			info->clr_f.b > 255)
 				info->clr_f.status = 0;
 			while (ft_isdigit(info->file[i]))
 				i++;
@@ -84,16 +84,14 @@ int	get_clr_f(t_all_info *info)
 	}
 	info->clr_f.value = 65536 * info->clr_f.r + 256 *
 	info->clr_f.g + info->clr_f.b;
-	return (0);
 }
 
-int	set_color_c(t_all_info *info, int i, char type)
+int		set_color_c(t_all_info *info, int i, char type)
 {
-	int color;
-
 	while (type == 'r' && info->file[i] == ' ')
 		i++;
-	while (info->file[i] == '0')
+	while (info->file[i] == '0' && info->file[i + 1] &&
+		ft_isdigit(info->file[i + 1]))
 		i++;
 	if (type != 'r')
 	{
@@ -116,7 +114,7 @@ int	set_color_c(t_all_info *info, int i, char type)
 	return (i);
 }
 
-int	get_clr_c(t_all_info *info)
+void	get_clr_c(t_all_info *info)
 {
 	int i;
 
@@ -132,7 +130,8 @@ int	get_clr_c(t_all_info *info)
 			i = set_color_c(info, i, 'r');
 			i = set_color_c(info, i, 'g');
 			i = set_color_c(info, i, 'b');
-			if (info->clr_c.r + info->clr_c.g + info->clr_c.b > 766)
+			if (info->clr_c.r > 255 || info->clr_c.g > 255 ||
+			info->clr_c.b > 255)
 				info->clr_c.status = 0;
 			while (ft_isdigit(info->file[i]))
 				i++;
@@ -142,5 +141,4 @@ int	get_clr_c(t_all_info *info)
 	}
 	info->clr_c.value = 65536 * info->clr_c.r + 256 *
 	info->clr_c.g + info->clr_c.b;
-	return (0);
 }

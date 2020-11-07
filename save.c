@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 08:16:41 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 11:45:50 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 12:54:06 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	initailize_variable(t_all_info *info)
 	info->bfoffbits = 54;
 	info->filesize = 54 + info->imagesize;
 	info->biplanes = 1;
-	info->header = malloc(54 + 1);
-	info->buf = malloc(info->imagesize + 1);
+	if (!(info->header = malloc(54 + 1)))
+		return (-1);
+	if (!(info->buf = malloc(info->imagesize + 1)))
+		return (-1);
 	while (i < 55)
 	{
 		info->header[i] = 0;
@@ -62,6 +64,7 @@ int	save_in_file(t_all_info *info)
 {
 	int	fd;
 
+	info->buf[info->imagesize] = '\0';
 	fd = open("save.bmp", O_WRONLY | O_CREAT, 0644);
 	write(fd, info->header, 54);
 	write(fd, info->buf, info->imagesize);

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 13:41:25 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 14:15:53 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 12:35:47 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,10 @@ int		check_the_maps(t_all_info *info)
 	if (i == -1)
 		return (-1);
 	maps = ft_strdup(info->file + i);
-	if (!check_line_spaces(maps))
+	if (!check_line_spaces(info->file))
+	{
 		return (-1);
+	}
 	info->maps = repiare_the_maps(maps);
 	info->height_number = get_max_h(info->maps);
 	info->width_number = get_max_w(info->maps);

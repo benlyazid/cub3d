@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 10:43:47 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 11:47:18 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:13:41 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int				check_save(t_all_info *info, char *argv[], int argc)
 			save_bmp(info);
 		else
 		{
-			printf("argc num is %d\n", argc);
 			set_error(80, info);
 			return (-1);
 		}

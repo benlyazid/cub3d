@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 18:18:26 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/04 12:48:00 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/07 10:34:20 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	insert_sprite_to_y(t_all_info *info, int moins, float x, float y)
 	sprite_center_y = (int)(y - info->moins) / info->size;
 	sprite_center_y *= (int)info->size;
 	sprite_center_y += ((int)info->size / 2);
-	sprite_data = (t_sprite*)malloc(sizeof(t_sprite));
+	if (!(sprite_data = (t_sprite*)malloc(sizeof(t_sprite))))
+		return ;
 	sprite_data->x_center = sprite_center_x;
 	sprite_data->y_center = sprite_center_y;
 	sprite_data->dest = DEST_2P(info->xp, info->yp, x, y - info->moins);

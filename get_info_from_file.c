@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:31:19 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 08:50:24 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:29:25 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char		*read_file(int fd)
 	char	*get;
 
 	file = NULL;
-	get = malloc(sizeof(char) + 1);
+	if (!(get = malloc(sizeof(char) + 1)))
+		return (file);
 	while (read(fd, get, 1))
 	{
 		get[1] = '\0';
@@ -53,7 +54,8 @@ char		*repiare_the_maps(char *maps)
 	int		last;
 
 	i = -1;
-	tst = malloc(sizeof(char) * (get_max_w(maps) + 1) * get_max_h(maps));
+	if (!(tst = malloc(sizeof(char) * (get_max_w(maps) + 1) * get_max_h(maps))))
+		return (NULL);
 	last = 0;
 	while (maps[++i])
 	{
