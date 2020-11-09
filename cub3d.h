@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:42:04 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/07 16:57:03 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/09 12:33:16 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "./libft/libft.h"
 # include <mlx.h>
 # include <math.h>
+# include <stdio.h>
 # define DEST_2P(X1, Y1, X2, Y2) sqrt(pow(X1 - X2, 2) + pow(Y1 - Y2, 2));
 # define R_P ( M_PI / 180)
 

@@ -6,20 +6,20 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 10:33:54 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/07 16:46:51 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:21:44 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_d_wall	initial_wall(char c, float dst, t_point point)
+t_d_wall	initial_wall(char c, float dst, t_point point, t_all_info *info)
 {
 	t_d_wall	wall;
 
 	if (c == 'z')
 	{
-		wall.x_wall = 0;
-		wall.y_wall = 0;
+		wall.x_wall = info->x_wall;
+		wall.y_wall = info->y_wall;
 		wall.destance = 0;
 		wall.type = c;
 	}
@@ -52,11 +52,11 @@ t_d_wall	calc_destance_to_wall(t_all_info *info)
 	else
 		yd = INT32_MAX;
 	if (xpoint.x >= 0 && xpoint.y >= 0 && yd >= xd)
-		dest_to_wall = initial_wall('y', xd, xpoint);
+		dest_to_wall = initial_wall('y', xd, xpoint, info);
 	else if (ypoint.x >= 0 && ypoint.y >= 0 && xd > yd)
-		dest_to_wall = initial_wall('x', yd, ypoint);
+		dest_to_wall = initial_wall('x', yd, ypoint, info);
 	else
-		dest_to_wall = initial_wall('z', 0, ypoint);
+		dest_to_wall = info->wall_dest;
 	return (dest_to_wall);
 }
 

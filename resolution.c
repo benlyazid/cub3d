@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 12:56:57 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/03 13:27:58 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:18:55 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	jump_width(char *file)
 				i++;
 			return (i);
 		}
+		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 16:24:02 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/06 08:49:10 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2020/11/09 12:29:59 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		check_for_unsuported_element(char *file)
 			while (file[i] == ' ' || file[i] == '1'
 			|| file[i] == '2' || file[i] == '0' || is_player(file[i]))
 				i++;
-			if (file[i] != '\n')
+			if (file[i] && file[i] != '\n')
 				return (0);
 		}
 		i++;
