@@ -6,7 +6,7 @@
 /*   By: kbenlyaz <kbenlyaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 14:39:01 by kbenlyaz          #+#    #+#             */
-/*   Updated: 2020/11/05 13:34:15 by kbenlyaz         ###   ########.fr       */
+/*   Updated: 2021/01/05 09:08:50 by kbenlyaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ float	config_angle(t_all_info *info)
 	float	angle_center;
 	float	x_angle;
 	float	angle_ray;
-
+	
+	// Calcule the Angle between the center of the sprite and the array
 	if (info->yp > info->sprt_strct_all->y_center)
 		angle_center = -acos((info->sprt_strct_all->x_center - info->xp)
 		/ info->rayon) * 180 / M_PI;
 	else
 		angle_center = acos((info->sprt_strct_all->x_center - info->xp)
 		/ info->rayon) * 180 / M_PI;
+	// transform all angle to 180
 	x_angle = 180 - angle_center;
 	angle_ray = x_angle + info->angle;
+	// keep the angle between 0 and 360
 	if (angle_ray < 0)
 		angle_ray = 360 + angle_ray;
 	if (angle_ray > 360)
